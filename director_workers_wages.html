@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/sururlogo.png" type="image/ico" />
+
+    <title>«SURUR» </title>
+
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- Font Awesome -->
+    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md" >
+    <div class="container body">
+        <div class="main_container">
+           <div id="helpersubmenu" style="position: sticky; top: 0;"></div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle" style="position: fixed; z-index: 1; top: 0;"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <div class="row" style="margin-right:0">
+                            
+                            <div class="col-md-6 col-sm-6">
+                                <h1 style="text-align: center;">OMBORXONA</h1>
+                            </div>
+                            
+                            <div class="col-sm-6 col-md-6">
+                                <div id="helpercheifmenu"></div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <div class="right_col" role="main">
+                <!-- Begin Staff Salary -->
+                <div class="row">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align: center; font-size: 20px">Oyliklarni beligilash</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="x_content">
+                        <form id="addStaffForm" style="display: flex; flex-direction: row;">
+                            <div class="row"> 
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">Lavozimi<span style="color:red"> *</span>
+                                            <select class="select2_single form-control" tabindex="0">
+                                                <option value="technological_man">Bosh texnolog</option>
+                                                <option value="staff">Ishchi</option>
+                                                <option value="manager">Manager</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">O'girligi(kg)<span style="color:red"> *</span>
+                                            <input class="form-control" required="required" type="text" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">Summa(so'm)<span style="color:red"> *</span>
+                                            <input class="form-control" required="required" type="number"/>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <button type='submit' style="height: 50%; margin-top: 12%;" class="btn btn-primary">Saqlash</button>
+                                        <button type='button' style="height: 50%; margin-top: 12%;" class="btn btn-danger" id="resetForm">Qayta_yuklash</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Begin Table Staff Salary -->
+            <div class="row">
+                <div class="page-title" style="text-align: center;">
+                    <h3>Ishchilar uchun oylik miqdori</h3>
+                </div>
+                <div style="text-align: center;">
+                    <table class="table table-hover" style="margin-left: 20px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">#</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Lavozimi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">O'girligi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Narxi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Yaratilgan kun</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Yaratilgan vaqt</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Jarayonlar</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="dataStaffSalary"> </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End Table Staff Salary -->
+            <!-- End Staff Salary -->
+
+            <!-- Begin Take Biscuit Form -->
+            <div class="row">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align: center; font-size: 20px">Korxonadan olingan pechenielar</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="x_content">
+                        <form id="takeBiscuitForm" style="display: flex; flex-direction: row;">
+                            <div class="row"> 
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">Ischi Nomi<span style="color:red"> *</span>
+                                            <select id="staffname" class="select2_single form-control" tabindex="0" style="width: 100%;"></select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">O'girligi(kg)<span style="color:red"> *</span>
+                                            <input class="form-control" required="required" type="text" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">Summa(so'm)<span style="color:red"> *</span>
+                                            <input class="form-control" required="required" type="number"/>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <button type='submit' style="height: 50%; margin-top: 12%;" class="btn btn-primary" id="addRetseptForm">Saqlash</button>
+                                        <button type='button' style="height: 50%; margin-top: 12%" class="btn btn-danger" id="resetForm">Qayta_yuklash</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="page-title" style="text-align: center;">
+                    <h3>Ishchilar uchun oylik miqdori</h3>
+                </div>
+                <div style="text-align: center;">
+                    <table class="table table-hover" style="margin-left: 20px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">#</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Ism Familiya</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">O'girligi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Summa</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Olingan kun</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Olingan vaqt</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Jarayonlar</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="dataTakeBiscuit"> </tbody>
+                    </table>
+                </div>
+            
+            </div>
+            <!-- Begin Take Biscuit Form -->
+
+            <div class="row">
+                <div class="page-title" style="text-align: center;">
+                    <h3>To'lanishi kerak bo'lgan oyliklar </h3>
+                </div>
+                <div style="text-align: center;">
+                    <table class="table table-hover" style="margin-left: 20px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">#</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Familiyasi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Ism</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Lavozimi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Telefon raqami</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Ishlab chiqargan pechenie og'irligi"> Pechenie(kg)</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Bir kg pechenie uchun to'lanadigan pul">Necha so'mdan</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Hamma harajatlardan ayrilgan sof oylik">Ish haqqi(so'm)</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Holati</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="dataStaffWages"> </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <!-- <div>
+                <div class="row">
+                    <div class="page-title" style="text-align: center;">
+                        <h3>Tanlangan kundan boshlab ishlab chiqargan yoki sotgan pechenielar miqdori </h3>
+                    </div>
+                    <hr>
+                    <!-- <div class="row" class="page-title"> -->
+                    <!-- </div> -->
+                    <!-- <div style="text-align: center;">
+                        <table class="table table-hover" style="margin-left: 20px;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">#</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Familiyasi</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Ism</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Lavozimi</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Manashu sanadan boshlab"> Dan</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Manashu sanagacha">Gacha</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Ishlab chiqargan pechenie"> Pechenie(kg)</th>
+                                    <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="To'langan pul">To'langan Pul(so'm)</th>
+                                  
+                                </tr> 
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td style="font-size: 14px;">Turg'unboyev</td>
+                                    <td style="font-size: 14px;">Toxirjon</td>
+                                    <td style="font-size: 14px;">Direktor</td>
+                                    <td style="font-size: 14px;">550</td>
+                                    <td style="font-size: 14px;">100</td>
+                                    <td style="font-size: 14px;">50</td>
+                                    
+                                    <td style="font-size: 14px;">550000</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td style="font-size: 14px;">Turg'unboyev</td>
+                                    <td style="font-size: 14px;">Toxirjon</td>
+                                    <td style="font-size: 14px;">Direktor</td>
+                                    <td style="font-size: 14px;">550</td>
+                                    <td style="font-size: 14px;">100</td>
+                                    <td style="font-size: 14px;">50</td>
+                                    
+                                    <td style="font-size: 14px;">550000</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td style="font-size: 14px;">Turg'unboyev</td>
+                                    <td style="font-size: 14px;">Toxirjon</td>
+                                    <td style="font-size: 14px;">Direktor</td>
+                                    <td style="font-size: 14px;">550</td>
+                                    <td style="font-size: 14px;">100</td>
+                                    <td style="font-size: 14px;">50</td>
+                                    <td style="font-size: 14px;">550000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                </div>
+            </div>
+            <hr> -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="vendors/fastclick/lib/fastclick.js"></script>
+    <!-- Flot -->
+    <script src="vendors/Flot/jquery.flot.js"></script>
+    
+    <script src="vendors/Flot/jquery.flot.time.js"></script>
+    <!-- DateJS -->
+    <script src="vendors/DateJS/build/date.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="build/js/custom.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+
+    <script src="js/mainjs/director_workers_wages.js"></script>
+    
+</body>
+</html>

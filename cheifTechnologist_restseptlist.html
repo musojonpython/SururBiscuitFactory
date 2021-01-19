@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/sururlogo.png" type="image/ico" />
+
+    <title> «SURUR» </title>
+
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div id="helpersubmenu" style="position: sticky; top: 0;">
+            </div>
+            
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle" style="position: fixed; z-index: 1; top: 0;"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <div class="row" style="margin-right: 0;">
+                            <div class="col-md-6 col-sm-6">
+                                <h4 style="text-align: center; padding-top: 45px;">Pechenie va Maxsulot</h4>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div id="helperinfocheif">
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="right_col" role="main">
+            <!-- begin repsetp form biscuit  -->
+                <div class="row">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div style="text-align: center;">
+                                <h4 style="text-align: center;">Pechenielarning retsept ro'yxati</h4>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <input type="text" style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
+                                <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
+                            </div>
+                            <div class="row">
+                                <div style="text-align: center;">
+                                    <table class="table table-hover" style="margin-left: 20px;" id="tblData">
+                                        <thead id="retseptListHead" class="thead-dark">
+                                        </thead>
+                                        <tbody id="retseptListBody"> 
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- end biscuit form retsept -->
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="vendors/fastclick/lib/fastclick.js"></script>
+    <!-- Flot -->
+    <script src="vendors/Flot/jquery.flot.js"></script>
+    
+    <script src="vendors/Flot/jquery.flot.time.js"></script>
+    <!-- DateJS -->
+    <script src="vendors/DateJS/build/date.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="build/js/custom.min.js"></script>
+    <!--Cookie  Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+<!-- Custom Theme Scripts -->
+    <script src="js/mainjs/cheif_technologist_retseptlist.js"></script>
+    
+</body>
+
+</html>

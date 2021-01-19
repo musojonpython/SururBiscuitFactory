@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/sururlogo.png" type="image/ico" />
+
+    <title> «SURUR» </title>
+
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div id="dataRightSubmenu" style="position: sticky; top: 0;"> </div>
+
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle" style="position: fixed; z-index: 1; top: 0;"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <div class="row" style="margin-right: 0;">
+                            <div class="col-md-6 col-sm-6">
+                                <h3 style="text-align: center; padding-top: 25px;">Jarima va Rag'batlantirishlar </h3>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div id="infoAboutCheif">
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="right_col" role="main">
+
+            <!-- begin repsetp form biscuit  -->
+            <div class="row">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align: center; font-size: 20px">Jarima va Rag'batlantirishlarni kiritish</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="x_content">
+                        <form id="addretseptform" style="display: flex; flex-direction: row;">
+                            <div id="addretseptrowId">
+                                <div class="row"> 
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Ishchi Nomi<span style="color:red"> *</span>
+                                                <select id = "staffName" class="select2_single form-control" tabindex="0"></select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Jarima yoki mukofat<span style="color:red"> *</span>
+                                                <select class="select2_single form-control" tabindex="0">
+                                                    <option value="mukofat">Mukofat</option>
+                                                    <option value="jarima">Jarima</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Nima uchun<span style="color:red"> *</span>
+                                                <input class="form-control" required="required" type="number"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Ishchi Nomi<span style="color:red"> *</span>
+                                                <input class="form-control" required="required" type="text"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <button type='button' class="btn btn-success" id="addretseptrow">Qator qo'shish </button>
+                        <button type='button' class="btn btn-danger" id="removeretseptrow">Qator o'chirish</button>
+                        <button type='submit' class="btn btn-primary" id="addretseptform">Saqlash</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <!-- end biscuit form retsept -->
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="vendors/fastclick/lib/fastclick.js"></script>
+    <!-- Flot -->
+    <script src="vendors/Flot/jquery.flot.js"></script>
+    <script src="vendors/Flot/jquery.flot.time.js"></script>
+    <!-- DateJS -->
+    <script src="vendors/DateJS/build/date.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="build/js/custom.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+    
+    <script src="js/mainjs/jobAdministrator_reward_punishEnter.js"></script>
+    
+</body>
+
+</html>
