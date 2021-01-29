@@ -12,7 +12,7 @@ $(document).ready(function(){
 
     getBiscuits();  
     getClients();  
-    warehouseProducts();    
+    warehouseSaledProducts();    
 
     $(document).on("click", "#undobutton", function(){
         location.reload();
@@ -53,7 +53,7 @@ $(document).ready(function(){
                 data:senddata,
             })
             .done(function(json){
-                location.reload();
+                // location.reload();
             })
             .fail(function(json){
                 alert("Internet yo'q");
@@ -97,7 +97,7 @@ $(document).ready(function(){
         getBiscuits();
         getClients();
 
-        let div, div0, div1_1, div1_2, input1;
+        let div, div0, div1_1, div1_2, input1, option;
 
         div = document.querySelector("#addbuyformId");
         div0 = document.createElement("div");
@@ -136,12 +136,20 @@ $(document).ready(function(){
                 input1.classList.add("form-control");
                 input1.classList.add("select2_single");
                 input1.style.width = '10rem'
-                let option = document.createElement("option");
-                option.value = '';
+                option = document.createElement("option");
+                option.value = 'credit_card';
                 option.text = 'Plastik karta'
-                select.appendChild(option);
+                input1.appendChild(option);
+                option = document.createElement("option");
+                option.value = 'debt';
+                option.text = 'Nasiya'
+                input1.appendChild(option);
+                option = document.createElement("option");
+                option.value = 'cash';
+                option.text = 'Naqd pul'
+                input1.appendChild(option);
             }
-            if (i == 3){
+            if (i == 3 || i == 2){
                 input1 = document.createElement("input");
                 input1.setAttribute("required", "required");
                 input1.setAttribute("type", "number");
@@ -342,7 +350,7 @@ $(document).ready(function(){
         })
     }
     
-    function warehouseProducts() {
+    function warehouseSaledProducts() {
         let size = 1
         $.ajax({
             type: "get",
@@ -362,7 +370,7 @@ $(document).ready(function(){
                             currency, biscuit:{unit_of_measurement}, comment, objid} = elem;
                     
                     if (payment_type == 'credit_card'){
-                        payment_type = "Plastik va bank o'tkazma"
+                        payment_type = "Plastik yoki bank o'tkazma"
                     }
                     if(payment_type == 'debt'){
                         payment_type = 'Nasiya';
