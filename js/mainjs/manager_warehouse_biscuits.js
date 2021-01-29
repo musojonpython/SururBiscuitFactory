@@ -45,7 +45,7 @@ $(document).ready(function(){
             },
         })
         .done(function(data){
-            let output = "", size = 1;
+            let output = "", size = 0;
 
             data.forEach(elem=>{
                 size++;

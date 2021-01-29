@@ -65,8 +65,14 @@ $(document).ready(function(){
                     .done(function(data){
                         location.reload();
                     })
-                    .fail(function(){
-                        alert("Internet yo'q");
+                    .fail(function(xhr, errorThrown, status){
+                        info = xhr.responseText;
+
+                        if (status == 'Bad Request'){
+                            alert(info)
+                        }else{
+                            alert("Internet yo'q");
+                        }
                     })
                 }
             }
@@ -116,7 +122,7 @@ $(document).ready(function(){
     
             for (let i = 2; i < p; i++){
                 elem = par.children(`td:nth-child(${i})`);
-                elem.html(`<input  style='width:100%' type='text' value='${elem.text()}' required/>`);
+                elem.html(`<input  style='width:100%' type='text' value="${elem.text()}" required/>`);
             }
         })
 
@@ -129,7 +135,7 @@ $(document).ready(function(){
             
             elem = par.children().eq(1);
             com = elem.children().val();
-            console.log(com)
+            
             elem = par.children().eq(2);
             fname = elem.children().val();
 
@@ -161,7 +167,6 @@ $(document).ready(function(){
                 "inn": inn,
                 "phone_number": phnumber,
             }
-            console.log(data);
             data = JSON.stringify(data);
 
             $.ajax({
@@ -177,8 +182,14 @@ $(document).ready(function(){
             .done(function(data){
                 location.reload();
             })
-            .fail(function(){
-                alert("Internet yo'q");
+            .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+
+                if (status == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
             })
         })
 
@@ -229,9 +240,15 @@ $(document).ready(function(){
                 })
                 document.getElementById('dynamictable').innerHTML=output;
             })
-            .fail(function(){
-                alert("Internet yo'q");
-            })        
+            .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+
+                if (status == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })  
         }
 
         function search_table(value, count){

@@ -96,7 +96,7 @@ $(document).ready(function(){
                 size++;
                 let {
                     user:{phone_number}, 
-                    user:{date_joined},
+                    // user:{date_joined},
                     user:{is_director},
                     user:{is_accountant},
                     user:{is_warehouseman},
@@ -142,8 +142,8 @@ $(document).ready(function(){
                     }
                 }
 
-                created_date = date_joined.slice(0, 10);
-                modified_time = date_joined.slice(11, 16);
+                // created_date = date_joined.slice(0, 10);
+                // modified_time = date_joined.slice(11, 16);
 
                 output += `
                 <tr>
@@ -153,8 +153,6 @@ $(document).ready(function(){
                 <td>${role}</td>
                 <td>${address}</td>
                 <td>${phone_number}</td>
-                <td>${created_date}</td>
-                <td>${modified_time}</td>
                 
             </tr>
             `    

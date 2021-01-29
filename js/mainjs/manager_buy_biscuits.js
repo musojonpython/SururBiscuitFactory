@@ -53,7 +53,7 @@ $(document).ready(function(){
                 data:senddata,
             })
             .done(function(json){
-                // location.reload();
+                location.reload();
             })
             .fail(function(json){
                 alert("Internet yo'q");
@@ -82,10 +82,10 @@ $(document).ready(function(){
             .done(function(json){
                 location.reload();
             })
-            .fail(function(xhr, status, errorThrown){
+            .fail(function(xhr, errorThrown, status){
                 info = xhr.responseJSON;
-                if (errorThrown == 'Bad Request'){
-                    alert(info[0] + ' xatolik berish')
+                if (status == 'Bad Request'){
+                    alert(info[0])
                 }else{
                     alert("Internet yo'q");
                 }
@@ -103,7 +103,7 @@ $(document).ready(function(){
         div0 = document.createElement("div");
         div0.classList.add('row');
 
-        for (let i = 1; i <= 7; i++){
+        for (let i = 1; i <= 6; i++){
             div1_1 = document.createElement("div");
             div1_1.classList.add("col");
             
@@ -120,15 +120,28 @@ $(document).ready(function(){
                 input1.setAttribute("id", "buscuitId");
                 input1.classList.add("form-control");
                 input1.classList.add("select2_single");
+                input1.style.width = '10rem';
             }
-            if (i == 5){
+            if (i == 4){
                 input1 = document.createElement("select")
                 input1.setAttribute("tabindex", "0");
                 input1.setAttribute("id", "clientId");
                 input1.classList.add("form-control");
                 input1.classList.add("select2_single");
+                input1.style.width = '10rem'
             }
-            if (i == 3 || i == 4){
+            if(i == 5){
+                input1 = document.createElement("select")
+                input1.setAttribute("tabindex", "0");
+                input1.classList.add("form-control");
+                input1.classList.add("select2_single");
+                input1.style.width = '10rem'
+                let option = document.createElement("option");
+                option.value = '';
+                option.text = 'Plastik karta'
+                select.appendChild(option);
+            }
+            if (i == 3){
                 input1 = document.createElement("input");
                 input1.setAttribute("required", "required");
                 input1.setAttribute("type", "number");
@@ -149,18 +162,6 @@ $(document).ready(function(){
         if (count > 1){
             div.removeChild(div.lastChild);
         }
-    })
-
-    $("button#showtable").click(function(){
-        $("#hidetable").css("display", "block");
-        biscuitcosts();
-        $("#tannarxitable").css("display", "block");
-    })
-
-    $("button#hidetable").click(function(){
-        $("#hidetable").css("display", "none");
-        biscuitcosts();
-        $("#tannarxitable").css("display", "none");
     })
 
     $('tbody').on("click", '#editbutton', function(){
@@ -201,7 +202,7 @@ $(document).ready(function(){
         // let p = par.children().length - 1;
 
         // Nomi	Og'irligi	O'lchov birligi	Sotilgan narxi	Pul birligi	Tolov turi	Umumiy pul	Kompaniya	Izoh	Sotilgan kun	Sotilgan vaqt
-        let elem, biscuit, quantity, measure, sellcost, currency, payment_type, client, comment;
+        let elem, biscuit, quantity, sellcost, currency, payment_type, client, comment;
 
         elem = par.children('#namecompany');
         console.log(elem);
@@ -354,7 +355,7 @@ $(document).ready(function(){
                 let output = "";
                 vitaldata.forEach(elem=>{
                     size = 1;
-                    let sale_price1, default_price1, total_price1;
+                    let sale_price1, total_price1;
                     
                     let {biscuit:{id}, biscuit:{name}, quantity, 
                             client:{company}, payment_type, modified_date, 

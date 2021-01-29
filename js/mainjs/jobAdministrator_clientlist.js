@@ -76,9 +76,14 @@ $(document).ready(function(){
         .done(function(json){
             location.reload();
         })
-        .fail(function(){
-            alert("internet yo'q");
-        })
+        .fail(function(xhr, errorThrown, status){
+            info = xhr.responseJSON;
+            if (status == 'Bad Request'){
+                alert(info[0])
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
     })
 
     $("button#addbuyformrow").click(function(){
@@ -159,9 +164,16 @@ $(document).ready(function(){
               .done(function(json){
                     location.reload();
               })
-              .fail(function(){
-                  alert("internet yo'q");    
-                })
+              .fail(function(xhr, errorThrown, status){
+                info = xhr.responseJSON;
+                console.log(info['phone_number'])
+                console.log(xhr)
+                if (status == 'Bad Request'){
+                    alert(info.phone_number)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
         }
     })
 
