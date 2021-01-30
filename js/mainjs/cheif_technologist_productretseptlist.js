@@ -10,7 +10,7 @@ $(document).ready(function(){
     
     $('#helpersubmenu').load('helpercheifTechnologist.html div#helpersubmenu')
     $('#helperinfocheif').load('helpercheifTechnologist.html div#helperinfocheif' )    
-
+    
     warehouseretsept();
     getmanufacturedProduct();
     warehouseproducts()
@@ -132,12 +132,12 @@ $(document).ready(function(){
     $(document).on("click", "#saveupdatebuttonproduct", function(){
         let par = $(this).parent().parent();
         let p = par.children().length - 3;
+        let price = parseInt(1);
         let elem, val, name, desc, firm, meas;
 
         elem = par.children().eq(1);
         name = elem.children().val();
-        id = elem.parent().children('#nameproduct').attr("data-id")
-        console.log(id);
+        productid = elem.parent().children('#nameproduct').attr("data-id")
 
         elem = par.children().eq(2);
         quantity = elem.children().val();
@@ -152,14 +152,14 @@ $(document).ready(function(){
         let data = {
             product: productid,
             quantity: quantity,
-            price: pri
+            price: price
         }
         $.ajax({
             type: "PUT",
             headers: {
                 'Authorization': `Token ${token}`
             },
-            url: `http://206.189.145.94/api/v1/product/${id}/`,
+            url: `http://206.189.145.94/api/v1/product/manufacture/add/quantity/${productid}/`,
             data: data,
         })
         .done(function(data){
@@ -442,7 +442,7 @@ $(document).ready(function(){
             alert("Internet yo'q");
         })
     }
-        manufacturedProduct
+
 
     function search_table(value, count){
         $('#tblData tbody tr').each(function(){
@@ -491,24 +491,25 @@ $(document).ready(function(){
                         <td>${description}</td>
                         <td>${modified_date1}</td>
                         <td>${modified_time}</td>
-                        <td style="display: flex; flex-direction: row">
-                        <p style="font-size: 20px; margin-right: 5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbuttonproduct">
-                            <i class="fa fa-edit"></i>
-                        </p>
-                        <p style="font-size: 20px; display: none; margin-right:5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebuttonproduct">
-                            <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
-                        </p>
-                        <p style="font-size: 20px; margin-right: 5px; cursor:pointer; display:none" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobuttonproduct">
-                            <i class="fa fa-undo"></i>
-                        </p>
-                        </td>
                     </tr>
                     `
                 })
-                document.getElementById('dynamictable').innerHTML=output;
+                document.getElementById('manufacturedProductTable').innerHTML=output;
             })
             .fail(function(xhr, status, errorThrown){
                 alert("Internet yo'q")
             })
         }
 })
+// Manufactured Product edit tabel
+{/* <td style="display: flex; flex-direction: row">
+<p style="font-size: 20px; margin-right: 5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbuttonproduct">
+    <i class="fa fa-edit"></i>
+</p>
+<p style="font-size: 20px; display: none; margin-right:5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebuttonproduct">
+    <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
+</p>
+<p style="font-size: 20px; margin-right: 5px; cursor:pointer; display:none" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobuttonproduct">
+    <i class="fa fa-undo"></i>
+</p>
+</td> */}

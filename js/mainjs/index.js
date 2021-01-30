@@ -65,7 +65,7 @@ $(document).ready(function(){
                                 Cookies.set("cheifSpecialistToken", token);
                             }else {
                             if(cheifTechnologist == true){
-                                window.open("cheifTechnologist_addbiscuit.html", '_self');
+                                window.open("cheifTechnologist_orders_list.html", '_self');
                                 Cookies.set("director", "false");
                                 Cookies.set("manager", "false");
                                 Cookies.set("jobAdministrator", "false");

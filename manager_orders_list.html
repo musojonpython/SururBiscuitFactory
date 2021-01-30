@@ -27,18 +27,18 @@
 <body class="nav-md" >
     <div class="container body">
         <div class="main_container">
-            <div id="helpersubmenu" style="position: sticky; top:0"> </div>
+            <div id="helpersubmenu" style="position: sticky; top: 0;"> </div>
 
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
                     <div class="nav toggle">
-                        <a id="menu_toggle" style="position: fixed; z-index: 1; top: 0;"><i class="fa fa-bars"></i></a>
+                        <a id="menu_toggle" style="position: fixed; z-index: 0; top: 0;"><i class="fa fa-bars"></i></a>
                     </div>
                     <nav class="nav navbar-nav">
                         <div class="row" style="margin-right: 0;">
                             <div class="col-md-6 col-sm-6">
-                                <h1 style="text-align: center; padding-top: 25px;">Zakazlar ro'yxati</h1>
+                                <h4 style="text-align: center; padding-top: 45px;">Pechenie va Maxsulot</h4>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div id="helperinfocheif">
@@ -52,74 +52,78 @@
 
             <!-- page content -->
             <div class="right_col" role="main">
-                <div class="x_content">
-                    <form id="ordersList" style="display: flex; flex-direction: row;">
-                        <div id="addOrderForm">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group ">
-                                        <label style="text-align: center; font-size: large;">Nomi<span style="color:red"> *</span>
-                                         <select class="select2_single form-control" id="buscuitId" tabindex="0" style="width: 15rem;">
-                                        </select>
-                                        </label>
+            <div class="row">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align: center; font-size: 20px">Zakaz berish</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="x_content">
+                        <form id="addOrdersForm" style="display: flex; flex-direction: row;">
+                            <div id="addOrdersId">
+                                <div class="row"> 
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Pechenie nomi<span style="color:red"> *</span>
+                                                <select id = "BiscuitName" class="select2_single form-control" tabindex="0" style="width: 200px; margin-left: 20px;"></select>
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group ">
-                                        <label style="text-align: center; font-size: large;">Og'irligi<span style="color:red"> *</span>
-                                        <input class="form-control" type="number" required="required" />
-                                        </label>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Og'irligi<span style="color:red"> *</span>
+                                                <input class="form-control" required="required" type="number" step="0.01" style="margin-left: 20px;" />
+                                              </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group ">
-                                        <label style="text-align: center; font-size: large;">Comment<span style="color:red"> *</span>
-                                        <textarea class="form-control" ></textarea>
-                                        </label>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label style="text-align: center; font-size: large;">Izoh<span style="color:red"> *</span>
+                                                <textarea class="form-control" style="width: 200px; margin-left: 20px;" rows="1"></textarea>
+                                             </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group" style="display: flex; flex-direction: row; margin-left: 3%;">
-                            <button type='button' class="btn btn-success" id="addOrderRow">Qator qo'shish </button>
-                            <button type='button' class="btn btn-danger" id="remOrderRow">Qator o'chirish</button>
-                            <button type='submit' class="btn btn-primary" id="submitOrdersForm">Saqlash</button>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" style="display: flex; flex-direction: row;">
+                            <button type='button' class="btn btn-success" id="addOrderForm">Qator qo'shish </button>
+                            <button type='button' class="btn btn-danger" id="removeOrderForm">Qator o'chirish</button>
+                            <button type='submit' class="btn btn-primary">Saqlash</button>
                         </div>
                     </div>
-                </form>
-                <div>
-                    <div style="text-align: center;">
-                        <h4>Zayavkalar ro'yxati</h4> 
-                    </div>
-                    <hr>
-                    <div style="display: flex; flex-direction: row;">
-                        <input type="text" style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
-                        <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
-                    </div>
-
-                    <table class="table table-hover" style="margin-left: 20px;" id="client_table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="position: sticky; top: 5px;" scope="col">#</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Nomi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Og'irligi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">O'lchov birligi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Sotilgan narxi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Pul birligi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Tolov turi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Umumiy pul</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Kompaniya</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Izoh</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Sotilgan kun</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Sotilgan vaqt</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Jarayon</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dynamictable"> </tbody>
-                    </table>
                 </div>
+                </form>
+                <div style="text-align: center;">
+                    <h4 style="text-align: center;">Zayavkalar ro'yxati</h4>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <input type="text" style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
+                    <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
+                </div>
+                <table class="table table-hover" style="margin-left: 20px;" id="ordersTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="position: sticky; top: 5px;" scope="col">#</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Pechenie nomi</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Holati</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Og'irligi</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Izoh</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Kuni</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Vaqt</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Jarayonlar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersList">
+                    </tbody>
+                </table>   
+                
             </div>
     </div>
 </div>
@@ -132,16 +136,16 @@
         <script src="vendors/fastclick/lib/fastclick.js"></script>
         <!-- Flot -->
         <script src="vendors/Flot/jquery.flot.js"></script>
+        <!-- TimeJs scripts -->
         <script src="vendors/Flot/jquery.flot.time.js"></script>
         <!-- DateJS -->
         <script src="vendors/DateJS/build/date.js"></script>
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
-        
+        <!-- Cookie Scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
 
         <script src="js/mainjs/manager_orders_list.js"></script>
-        <!-- Cookie Scripts -->
         
 </body>
 </html>

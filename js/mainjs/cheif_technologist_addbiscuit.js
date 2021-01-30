@@ -3,7 +3,6 @@ $(document).ready(function(){
     let mycookie = Cookies.get('cheifTechnologist');
 
     if (mycookie === "false" || mycookie == undefined){
-        console.log("enter")
         window.open("index.html", "_self")   
     }
     let token = Cookies.get('cheifTechnologistToken');
@@ -11,7 +10,7 @@ $(document).ready(function(){
     $('#helpersubmenu').load('helpercheifTechnologist.html div#helpersubmenu');
     $('#helperinfocheif').load('helpercheifTechnologist.html div#helperinfocheif');
 
-    warehouseProducts();
+    warehouseProduceProduct();
     getBiscuit();
     getStaff();
     
@@ -24,7 +23,7 @@ $(document).ready(function(){
 
         for (let i = 0; i < count; i++){
             biscuitid = parseFloat(event.target[i].value); i++;
-            staff = parseFloat(event.target[i].value); i++;
+            staff = (event.target[i].value); i++;
             quantity = parseFloat(event.target[i].value);
 
             let data = {
@@ -46,16 +45,19 @@ $(document).ready(function(){
                 }
             })
             .done(function(json){
-                location.reload();
+                // location.reload();
             })
            .fail(function(xhr, status, errorThrown){
-               infojson = xhr.responseJSON
+               console.log(xhr);
+               console.log(status);
+               console.log(errorThrown);
+               infojson = xhr.responseText
                infojson = infojson[0];
                
                if (errorThrown == 'Bad Request'){
                     alert(infojson)
                }else{
-                    alert("INternet yo'q");
+                    alert("Internet yo'q");
                }
            })
         }
@@ -272,7 +274,7 @@ $(document).ready(function(){
                     element = document.createElement("option");
                     fio = elem.first_name + " " + elem.last_name;
                     element.textContent = fio;
-                    element.setAttribute("value", elem.user.id);
+                    element.setAttribute("value", elem.user);
                     staff[count].appendChild(element);
                 })
             })
@@ -281,7 +283,8 @@ $(document).ready(function(){
         })
     }    
 
-    function warehouseProducts() {
+    function warehouseProduceProduct() {
+        console.log("worked")
         $.ajax({
             type: "GET",
             url: 'http://206.189.145.94/api/v1/biscuit/staff/produce/',
@@ -290,6 +293,7 @@ $(document).ready(function(){
             },
         })
         .done(function(data){
+            console.log(data);
             let output = "", size = 0;
 
             data.forEach(elem=>{

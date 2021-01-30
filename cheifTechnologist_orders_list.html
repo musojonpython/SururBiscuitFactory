@@ -39,7 +39,7 @@
                     <nav class="nav navbar-nav">
                         <div class="row" style="margin-right: 0;">
                             <div class="col-md-6 col-sm-6">
-                                <h4 style="text-align: center; padding-top: 45px;">Pechenie va Maxsulot</h4>
+                                <h1 style="text-align: center; padding-top: 45px;">Zakazlar bo'limi</h1>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div id="helperinfocheif">
@@ -53,7 +53,29 @@
 
             <!-- page content -->
             <div class="right_col" role="main">
-            <h1>Jarima va Rag'batlantirish uchun joylar</h1>
+                <div style="text-align: center;">
+                    <h4 style="text-align: center;">Zakazlar ro'yxati</h4>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <input type="text" style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
+                    <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
+                </div>
+                <table class="table table-hover" style="margin-left: 20px;" id="ordersTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="position: sticky; top: 5px;" scope="col">#</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Pechenie nomi</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Holati</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Og'irligi</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Izoh</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Kuni</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Vaqt</th>
+                            <th style="position: sticky; top: 5px;" scope="col">Jarayonlar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersList">
+                    </tbody>
+                </table>   
             </div>
     </div>
 </div>
@@ -75,7 +97,7 @@
         <!-- Cookie Scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
 
-        <script src="js/mainjs/cheif_technologist_reward_punishment.js"></script>
+        <script src="js/mainjs/cheif_technologist_orders_list.js"></script>
         
 </body>
 </html>

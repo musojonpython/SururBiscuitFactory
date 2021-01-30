@@ -83,9 +83,9 @@ $(document).ready(function(){
                 location.reload();
             })
             .fail(function(xhr, errorThrown, status){
-                info = xhr.responseJSON;
+                info = xhr.responseText;
                 if (status == 'Bad Request'){
-                    alert(info[0])
+                    alert(info)
                 }else{
                     alert("Internet yo'q");
                 }

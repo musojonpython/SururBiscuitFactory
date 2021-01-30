@@ -41,7 +41,7 @@ $(document).ready(function(){
         location.reload();
     })
 
-    $("form#savenewtypeproductform").submit(function(event){
+    $("form#saveNewTypeProductForm").submit(function(event){
         let count = event.target.length - 3;
         let name = "", measurement = "", firm_name = "", showname="";
         
@@ -60,6 +60,7 @@ $(document).ready(function(){
                 supplier: firm_name,
                 unit_of_measurement: measurement
             }
+            console.log(data);
 
             $.ajax({
                 type: "POST",
@@ -70,7 +71,7 @@ $(document).ready(function(){
                 data: data,
             })
             .done(function(data){
-                location.reload();
+                // location.reload();
             })
             .fail(function(){
                 alert("Internet yo'q");
@@ -110,11 +111,31 @@ $(document).ready(function(){
                 input1.classList.add("form-control");
                 input1.classList.add("select2_single");
                 input1.setAttribute("id", "clientId");
+                input1.style.width = '13rem';
             }else{
                 input1 = document.createElement("input")
                 input1.setAttribute("type", "text");
                 input1.setAttribute("required", "required");
                 input1.classList.add("form-control");
+            }
+            if (i == 3){
+                input1 = document.createElement("select")
+                input1.setAttribute("tabindex", "1");
+                input1.classList.add("form-control");
+                input1.classList.add("select2_single");
+                input1.style.width = '13rem';
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("kg"))
+                option.value = "kg"
+                input1.appendChild(option);
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("gramm"))
+                option.value = "gramm"
+                input1.appendChild(option);
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("litr"))
+                option.value = "litr"
+                input1.appendChild(option);
             }
             div2.appendChild(input1);
             div1.appendChild(div2);
@@ -216,15 +237,15 @@ $(document).ready(function(){
                         <td>${created_date}</td>
                         <td>${modified_date}</td>
                         <td style="display: flex; flex-direction: row">
-                        <p style="font-size: 20px; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
-                            <i class="fa fa-edit"></i>
-                        </p>
-                        <p style="font-size: 20px; display: none; margin-right:10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
-                            <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
-                        </p>
-                        <p style="font-size: 20px; display:none; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
-                            <i class="fa fa-undo"></i>
-                        </p>
+                            <p style="font-size: 20px; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
+                                <i class="fa fa-edit"></i>
+                            </p>
+                            <p style="font-size: 20px; display: none; margin-right:10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
+                                <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
+                            </p>
+                            <p style="font-size: 20px; display:none; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
+                                <i class="fa fa-undo"></i>
+                            </p>
                         </td>
                     </tr>
                     `
@@ -232,10 +253,11 @@ $(document).ready(function(){
             })
             document.getElementById('dynamictable').innerHTML=output;
         })
-        fail(function(){
+        .fail(function(){
             alert("Internet yo'q");
         })
     }
+    
     function getclients(){
         $.ajax({
             type: "GET",

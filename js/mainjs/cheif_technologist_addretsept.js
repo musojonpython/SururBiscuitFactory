@@ -24,7 +24,7 @@ $(document).ready(function(){
     // Begin Creating dynamic rows for new type biscuit
     
     $("button#addNewTypeBiscuitrow").click(function(){
-        let div, div0, input1, div1, div2;
+        let div, div0, input1, div1, div2, option;
 
         div = document.querySelector("#newTypeBiscuitAddRowid");
         div0 = document.createElement("div");
@@ -48,15 +48,36 @@ $(document).ready(function(){
                 input1.setAttribute("tabindex", "1");
                 input1.classList.add("form-control");
                 input1.classList.add("select2_single");
-                input1.style.marginLeft = "2px";
-                let opt = document.createElement("option");
-                opt.appendChild(document.createTextNode("Pechenie"))
-                opt.value = "biscuit"
-                let opt1 = document.createElement("option");
-                opt1.appendChild(document.createTextNode("Xomashyo"))
-                opt1.value = "product"
-                input1.appendChild(opt);
-                input1.appendChild(opt1);
+                input1.style.width = '13rem';
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("Pechenie"))
+                option.value = "biscuit"
+                input1.appendChild(option);
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("Xomashyo"))
+                option.value = "product"
+                input1.appendChild(option);
+            }
+            if (i == 3) {
+                input1 = document.createElement("select")
+                input1.setAttribute("tabindex", "1");
+                input1.classList.add("form-control");
+                input1.classList.add("select2_single");
+                input1.style.width = '13rem';
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("kg"))
+                option.value = "kg"
+                input1.appendChild(option);
+                option = document.createElement("option");
+                option.appendChild(document.createTextNode("gramm"))
+                option.value = "gramm"
+                input1.appendChild(option);
+            }
+            if (i == 4) {
+                input1 = document.createElement("input")
+                input1.setAttribute("required", "required");
+                input1.setAttribute("type", "number");
+                input1.classList.add("form-control");
             }
 
             div2.appendChild(input1);
@@ -276,18 +297,18 @@ $(document).ready(function(){
         })
     })
     
-    $('#showtables').on('change', function(){
-        let text = $('#showtables').val();
+    // $('#showtables').on('change', function(){
+    //     let text = $('#showtables').val();
 
-        if (text == 'product'){
-            producttable = true;
-            biscuittable = false;
-        }else{
-            biscuittable = true;
-            producttable = false;
-        }
-        warehouseproducts();
-    })
+    //     if (text == 'product'){
+    //         producttable = true;
+    //         biscuittable = false;
+    //     }else{
+    //         biscuittable = true;
+    //         producttable = false;
+    //     }
+    //     warehouseproducts();
+    // })
 
     $('#search').keyup(function(){
         let count = 0;

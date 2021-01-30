@@ -1,140 +1,34 @@
 $(document).ready(function(){
 
-    let mycookie = Cookies.get("manager");
+    let mycookie = Cookies.get('cheifTechnologist');
     
     if (mycookie == "false" || mycookie == undefined){
         window.open("index.html", "_self")   
     }
-    let token = Cookies.get('managerToken');
+    let token = Cookies.get('cheifTechnologistToken');
   
-    $('#helpersubmenu').load('helperManager.html div#helpersubmenu');
-    $('#helperinfocheif').load('helperManager.html div#helperinfocheif');
-
-    getBiscuit();
+    $('#helpersubmenu').load('helpercheifTechnologist.html div#helpersubmenu')
+    $('#helperinfocheif').load('helpercheifTechnologist.html div#helperinfocheif' )
+    
+    warehouseOrders();
 
     $(document).on("click", "#undobutton", function(){
         location.reload();
     })
-
-    $("button#removeOrderForm").click(function(){
-        let div = document.querySelector("#addOrdersId");
-        let count = div.childElementCount;
-        if (count > 1){
-            div.removeChild(div.lastChild);
-        }
-    })
-
-    $("button#addretseptrow").click(function(){
-        getBiscuit();
-        let div, div0, input1, div1, div2;
-
-        div = document.querySelector("#addretseptrowId");
-        div0 = document.createElement("div");
-        div0.classList.add('row');
-
-        for (let i = 1; i <= 4; i++){
-            div1 = document.createElement("div");
-            div1.classList.add("col");
-            div2 = document.createElement("div");
-            div2.classList.add("form-group");    
-
-            if (i == 1){
-                input1 = document.createElement("select")
-                input1.setAttribute("tabindex", "0");
-                input1.setAttribute("id", "BiscuitName");
-                input1.classList.add("form-control");
-                input1.classList.add("select2_single");
-                input1.style.marginLeft = "20px";
-                input1.style.width = "200px";
-            }
-            if (i == 2){
-                input1 = document.createElement("select")
-                input1.setAttribute("tabindex", "0");
-                input1.setAttribute("id", "ProductName");
-                input1.classList.add("form-control");
-                input1.classList.add("select2_single");
-                let opt = document.createElement("option");
-                opt.appendChild(document.createTextNode("Brak"))
-                opt.value = "recyclable";
-                let opt1 = document.createElement("option");
-                opt1.appendChild(document.createTextNode("Drabilka"))
-                opt1.value = "unrecyclable";
-                input1.style.marginLeft = "20px";
-                input1.style.width = "200px";
-                input1.appendChild(opt);
-                input1.appendChild(opt1);
-            }
-            if (i == 3){
-                input1 = document.createElement("input");
-                input1.setAttribute("required", "required");
-                input1.setAttribute("type", "number");
-                input1.classList.add("form-control");
-                input1.style.marginLeft = "20px";
-            }
-            if (i == 4) {
-                input1 = document.createElement("textarea");
-                input1.style.width = "200px";
-                input1.classList.add("form-control");
-                input1.style.marginLeft = "20px";
-                input1.setAttribute("rows", "1");
-            }
-            div2.appendChild(input1);
-            div1.appendChild(div2);
-            div0.appendChild(div1);
-        }
-
-        div.appendChild(div0);
-    })
-    
-    function getBiscuit(){
-        $.ajax({
-            type: "GET",
-            url: "http://206.189.145.94/api/v1/biscuit/",
-            headers: {
-                'Authorization': `token ${token}`
-                },
-            })
-        .done(function(data){
-            let biscuits = document.querySelectorAll("#BiscuitName");
-            let count = biscuits.length - 1;
-        
-            data.forEach(elem=>{
-                let element = document.createElement("option");
-                element.textContent = elem.name;
-                element.setAttribute("value", elem.id);
-                biscuits[count].appendChild(element);
-                })
-            })
-        .fail(function(){
-            alert("Internet yo'q");
-            })
-    }
     
     $(document).on("click", "#editbutton", function(){
         $(this).nextAll().eq(0).css("display", "block");
         $(this).nextAll().eq(1).css("display", "block");
         let par = $(this).parent().parent();
-        let p = par.children().length - 3;
 
-        for (let i = 2; i <= p; i++){
-            let elem = par.children(`td:nth-child(${i})`);
-            elem.html(`<input style='width:100%' class="form-control" type='text' value='${elem.text()}' required/>`);
+        let elem = par.children(`td:nth-child(${3})`);
+        elem.html(
+            `<select class="select2_single form-control" tabindex="1" style="width: 100%;">
+                <option value="pending">Zakaz berildi</option>
+                <option value="completed">Tugatilgan</option>
+            </select>`
+        )
 
-            if (i == 2) {
-                elem.html(
-                    `<select class="select2_single form-control" tabindex="1" style="width: 100%;" id="BiscuitName"></select>`
-                )
-            }
-            if (i == 3){
-                elem.html(
-                    `<select class="select2_single form-control" tabindex="1" style="width: 100%;">
-                        <option value="pending">Zakaz berildi</option>
-                        <option value="completed">Tugatilgan</option>
-                    </select>`
-                )
-            }
-        }
-        getBiscuit();
     })
 
     $(document).on("click", "#saveupdatebutton", function(){
@@ -169,17 +63,17 @@ $(document).ready(function(){
                 'Content-type': 'application/json',
                 'Authorization': `Token ${token}`
             },
-            url: `http://206.189.145.94/api/v1/order/client/orders/${orderId}/`,
+            url: `http://206.189.145.94/api/v1/order/client/orders/id=${orderId}/`,
             data: data,
         })
         .done(function(data){
             location.reload();
         })
         .fail(function(xhr, status, errorThrown){
-            console.log(xhr)
+            console.log(xhr, status)
             infojson = xhr.responseText
             
-            if (errorThrown == 'Bad Request'){
+            if (status == 'Bad Request'){
                  alert(infojson)
             }else{
                  alert("Internet yo'q");
@@ -232,48 +126,6 @@ $(document).ready(function(){
         div.appendChild(div0);
     })
 
-    $("form#addOrdersForm").submit(function(event){
-        event.preventDefault();
-
-        let idBiscuit, weight;
-        let count = event.target.length - 4;
-
-        for (let i = 0; i < count; i++){
-            let data = {};
-            idBiscuit = parseFloat(event.target[i].value); i++;
-            weight = parseFloat(event.target[i].value); i++;
-            desc = event.target[i].value;
-
-            data.biscuit = idBiscuit;
-            data.quantity = weight;
-            data.comment = desc;
-            data = JSON.stringify(data)
-
-            console.log(data);
-            $.ajax({
-                type: "post",
-                url: 'http://206.189.145.94/api/v1/order/client/orders/',
-                data: data,
-                headers:{
-                    'Accept':'application/json, text/plain, */*',
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${token}`
-                },
-            })
-            .done(function(data){
-                // location.reload();
-            })
-            .fail(function(xhr, errorThrown, status){
-                info = xhr.responseText;
-                if (status == 'Bad Request'){
-                    alert(info)
-                }else{
-                    alert("Internet yo'q");
-                }
-            })    
-        }
-        })
-
     $('#search').keyup(function(){
         let count = 0;
         search_table($(this).val(), count);
@@ -296,7 +148,7 @@ $(document).ready(function(){
             }
         })
     }
-    warehouseOrders();
+    
 
     function warehouseOrders() {
         $.ajax({
@@ -308,6 +160,7 @@ $(document).ready(function(){
         })
         .done(function(data){
             let output = "", size = 0;
+            console.log(data);
 
             data.forEach(elem=>{
                 size++;
@@ -316,7 +169,7 @@ $(document).ready(function(){
                 let orderId = elem.id;
 
                 date = created_date.slice(0, 10);
-                console.log(created_date)
+                console.log(created_date) 
                 time = created_date.slice(11, 16);
                 if (status === 'pending') {
                     status = 'Zakaz berilgan';

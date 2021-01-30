@@ -83,6 +83,7 @@ $(document).ready(function(){
             alert("Internet yo'q");
         })
         })
+
     $('tbody').on("click", '#editbutton', function(){
         $(this).nextAll().eq(0).css("display", "block");
         $(this).nextAll().eq(2).css("display", "block");
@@ -133,6 +134,7 @@ $(document).ready(function(){
             alert("Internet yo'q");
         })
         })    
+
     $(document).on("click", "#addrowtable", function(){
         getBiscuit();
 
@@ -159,7 +161,6 @@ $(document).ready(function(){
         $("#tblData tbody").append(string);
 
     })
-
 
     function warehouseproducts(){
         let table = $("#retseptListHead");
@@ -263,8 +264,7 @@ $(document).ready(function(){
             }
         })
 
-    }
-    
+    }    
 
     function getBiscuit(){
         

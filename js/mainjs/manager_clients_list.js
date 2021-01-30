@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
         let mycookie = Cookies.get("manager");
-        
+        alert(mycookie);
         if(mycookie == "false" || mycookie == undefined){
             window.open("index.html", "_self");
         }

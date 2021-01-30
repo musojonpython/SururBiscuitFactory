@@ -129,7 +129,7 @@ $(document).ready(function(){
                 alert("Internet yo'q")
             })
         }
-        })
+    })
     // End save retsept biscuit data to server
 
     // Begin  get information from data for select element
@@ -157,30 +157,33 @@ $(document).ready(function(){
             alert("Internet yo'q");
         })
         }
+
     $(document).on("click", "#selectoptions", function(){
         warehouseproducts()
     })
 
+    $(document).on("click", "#undobutton", function(){
+        location.reload();
+    })
 
     $(document).on("click", "#editbutton", function(){
-        let item = $(this).nextAll().eq(0).css("display", "block");
+        $(this).nextAll().eq(0).css("display", "block");
+        $(this).nextAll().eq(1).css("display", "block");
         let par = $(this).parent().parent();
         let p = par.children().length - 3;
 
-        for (let i = 2; i <= p; i++){
+        for (let i = 3; i <= p; i++){
             let elem = par.children(`td:nth-child(${i})`);
-
             if (i == 3){
                 elem.html(`<select class="select2_single form-control" tabindex="1" style="width: 100%;">
-                <option value="recyclable">Brak</option>
-                <option value="unrecyclable">Drabilka</option>
+                <option value="unrecyclable">Brak</option>
+                <option value="recyclable">Drabilka</option>
                 </select>`)
             }else{
                 elem.html(`<input style='width:100%' class="form-control" type='text' value='${elem.text()}' required/>`)
             }
         }
     })
-
 
     $(document).on("click", "#saveupdatebutton", function(){
         let data = {}, name;
@@ -190,21 +193,19 @@ $(document).ready(function(){
         elem = par.children().eq(1);
         name = elem.children().val();
 
-        idBiscuit = elem.parent().children('#nameproduct').attr("data-id")
-        console.log(idBiscuit)
+        idBiscuit = parseInt(elem.parent().children('#nameproduct').attr("data-id"));
         elem = par.children().eq(2);
         status = elem.children().val();
 
         elem = par.children().eq(3);
-        weight = elem.children().val();
-        weight = weight.slice(0, -5);
+        weight = parseInt(elem.children().val());
 
         data.biscuit = idBiscuit
         data.quantity = weight;
-        data.status = status
-        data = JSON.stringify(data)
+        data.status = status;
+        data.description='yaxshi';
+        data = JSON.stringify(data);
         
-
         $.ajax({
             type: "PUT",
             headers: {
@@ -216,12 +217,41 @@ $(document).ready(function(){
             data: data,
         })
         .done(function(data){
-            location.reload();
+            // location.reload();
         })
-        .fail(function(){
-            alert("Internet yo'q");
+        .fail(function(xhr, status, errorThrown){
+            infojson = xhr.responseText
+            
+            if (errorThrown == 'Bad Request'){
+                 alert(infojson)
+            }else{
+                 alert("Internet yo'q");
+            }
         })
+    })
+    
+    $('#search').keyup(function(){
+        let count = 0;
+        search_table($(this).val(), count);
+    })
+
+    function search_table(value, count){
+        $('#clientTable tbody tr').each(function(){
+            let found = false;
+            $(this).each(function(){
+                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                    found = true;
+                    count++;
+                }
+            })
+            if (found){
+                $(this).show();
+                $('#counter').text(count + " ta topildi");
+            }else{
+                $(this).hide();
+            }
         })
+    }
 
     function warehouseproducts() {
         let option = "";
@@ -239,7 +269,7 @@ $(document).ready(function(){
                 },
             })
             .done(function(data){
-                let output = "", size = 1;
+                let output = "", size = 0;
                 data.forEach(elem=>{
                     size++;
                     let {biscuit:{name}, quantity,  total_price, created, id} = elem;
@@ -254,8 +284,15 @@ $(document).ready(function(){
                         <td>${total_price}</td>
                         <td>${created_date}</td>
                         <td style="display: flex; flex-direction: row">
-                        <p style="font-size: 20px; margin-right: 5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton"><i class="fa fa-edit"></i></p>
-                        <p style="font-size: 20px; display: none; margin-right:5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton"><button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button></p>
+                        <p style="font-size: 20px; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
+                            <i class="fa fa-edit"></i>
+                        </p>
+                        <p style="font-size: 20px; display: none; margin-right:10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
+                            <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
+                        </p>
+                        <p style="font-size: 20px; display:none; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
+                            <i class="fa fa-undo"></i>
+                        </p>
                         </td>
                     </tr>
                     `    
@@ -292,8 +329,15 @@ $(document).ready(function(){
                         <td>${total_price}</td>
                         <td>${created_date}</td>
                         <td style="display: flex; flex-direction: row">
-                        <p style="font-size: 20px; margin-right: 5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton"><i class="fa fa-edit"></i></p>
-                        <p style="font-size: 20px; display: none; margin-right:5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton"><button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button></p>
+                            <p style="font-size: 20px; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
+                                <i class="fa fa-edit"></i>
+                            </p>
+                            <p style="font-size: 20px; display: none; margin-right:10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
+                                <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
+                            </p>
+                            <p style="font-size: 20px; display:none; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
+                                <i class="fa fa-undo"></i>
+                            </p>
                         </td>
                     </tr>
                     `    
