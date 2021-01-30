@@ -173,7 +173,7 @@ $(document).ready(function(){
             data: data,
         })
         .done(function(data){
-            location.reload();
+            // location.reload();
         })
         .fail(function(xhr, status, errorThrown){
             console.log(xhr)
@@ -261,7 +261,7 @@ $(document).ready(function(){
                 },
             })
             .done(function(data){
-                // location.reload();
+                location.reload();
             })
             .fail(function(xhr, errorThrown, status){
                 info = xhr.responseText;
@@ -272,7 +272,7 @@ $(document).ready(function(){
                 }
             })    
         }
-        })
+    })
 
     $('#search').keyup(function(){
         let count = 0;
@@ -316,7 +316,6 @@ $(document).ready(function(){
                 let orderId = elem.id;
 
                 date = created_date.slice(0, 10);
-                console.log(created_date)
                 time = created_date.slice(11, 16);
                 if (status === 'pending') {
                     status = 'Zakaz berilgan';

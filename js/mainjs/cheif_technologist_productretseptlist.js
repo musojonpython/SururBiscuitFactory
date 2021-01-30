@@ -23,10 +23,53 @@ $(document).ready(function(){
         location.reload();
     })
 
-    $('#search').keyup(function(){
-        let count = 0;
-        search_table($(this).val(), count);
+    $('#searchProductTable').keyup(function(){
+        let countProduct = 0;
+        searchProductTable($(this).val(), countProduct);
     })
+
+    function searchProductTable(value, countProduct){
+        $('#productTable tbody tr').each(function(){
+            let found = false;
+
+            $(this).each(function(){
+                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) > 0){
+                    found = true;
+                    countProduct++;
+                }
+            })
+            if (found){
+                $(this).show();
+                $('#counterProductTable').text(countProduct + " ta topildi");
+            }else{
+                $(this).hide();
+            }
+        })
+    }
+
+    $('#searchProductRetsept').keyup(function(){
+        let count = 0;
+        searchProductRetseptTable($(this).val(), count);
+    })
+
+    function searchProductRetseptTable(value, count){
+        $('#productRetseptTable tbody tr').each(function(){
+            let found = false;
+
+            $(this).each(function(){
+                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                    found = true;
+                    count++;
+                }
+            })
+            if (found){
+                $(this).show();
+                $('#counterProductRetsept').text(count + " ta topildi");
+            }else{
+                $(this).hide();
+            }
+        })
+    }
 
     $("form#addproductform").submit(function(event){
         event.preventDefault();
@@ -55,9 +98,14 @@ $(document).ready(function(){
             .done(function(data){
                 location.reload();
             })
-            .fail(function(){
-                alert("Internet yo'q")
-            })
+            .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+                if (status == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
         }
     })
 
@@ -319,9 +367,14 @@ $(document).ready(function(){
 
                 table.html(thead);
             })
-            .fail(function(res){
-                alert("Internet yo'q")
-            })
+            .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+                if (status == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
 
         $.ajax({
             type: "GET",
@@ -383,14 +436,25 @@ $(document).ready(function(){
                             $("#retseptListBody").append(tbody);
                             globalcountProduct++;
                         }
-                    }).fail(function(){
-                        alert("Internet yo'q");
                     })
+                    .fail(function(xhr, errorThrown, status){
+                        info = xhr.responseText;
+                        if (status == 'Bad Request'){
+                            alert(info)
+                        }else{
+                            alert("Internet yo'q");
+                        }
+                    })    
                 }
             })
-            .fail(function(){
-                alert("Internet yo'q");
-            })
+            .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+                if (status == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
     }
     
     function getXomashyo(){
@@ -440,25 +504,6 @@ $(document).ready(function(){
         })
         .fail(function(){
             alert("Internet yo'q");
-        })
-    }
-
-
-    function search_table(value, count){
-        $('#tblData tbody tr').each(function(){
-            let found = false;
-
-            $(this).each(function(){
-                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
-                    found = true;
-                }
-            })
-            if (found){
-                $(this).show();
-                $('#counter').text(count + " ta topildi");
-            }else{
-                $(this).hide();
-            }
         })
     }
 

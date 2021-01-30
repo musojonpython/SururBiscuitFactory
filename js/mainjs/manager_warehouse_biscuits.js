@@ -25,12 +25,17 @@ $(document).ready(function(){
                 if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
                     found = true;
                     count++;
+                    console.log(count);
                 }
             })
             if(found){
                 $("#counter").text(count + " ta topildi")
                 $(this).show();
+                console.log("show worked");
             }else{
+                // count = 0;
+                console.log("hide worked");
+                $("#counter").text(count + " ta topildi")
                 $(this).hide();
             }
         })
