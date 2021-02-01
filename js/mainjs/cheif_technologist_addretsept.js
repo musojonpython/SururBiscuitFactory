@@ -223,35 +223,21 @@ $(document).ready(function(){
 
         let par = $(this).parent().parent();
         let p = par.children().length - 3;
-        if (biscuittable){
-            for (let i = 2; i <= p; i++){
-                let elem = par.children(`td:nth-child(${i})`);
-                
-                if (i == 2){
-                    elem.html(`<select style='width:100%' class="select2_single" tabindex="1" id='BiscuitName'> </select> `)
-                }else{
-                    elem.html(`<input style='width:100%' type='text' value='${elem.text()}' required/>`)
-                }
-            }
-        }else{
-            for (let i = 2; i <= p; i++){
-                let elem = par.children(`td:nth-child(${i})`);
-                
-                if (i == 2){
-                    elem.html(`<select style='width:100%' class="select2_single" tabindex="1" id='XomashyoName'> </select> `)
-                }else{
-                    elem.html(`<input style='width:100%' type='text' value='${elem.text()}' required/>`)
-                }
+        for (let i = 2; i <= p; i++){
+            let elem = par.children(`td:nth-child(${i})`);
+            
+            if (i == 2){
+                elem.html(`<select style='width:100%' class="select2_single" tabindex="1" id='BiscuitName'> </select> `)
+            }else{
+                elem.html(`<input style='width:100%' type='text' value='${elem.text()}' required/>`)
             }
         }
         getBiscuit();
-        getXomashyo();
     })
 
     $(document).on("click", "#undobutton", function(){
         location.reload();
     })
-
 
     $(document).on("click", "#saveupdatebutton", function(){
         let par = $(this).parent().parent();
@@ -274,11 +260,13 @@ $(document).ready(function(){
         }
         data = JSON.stringify(data);
         
-        if (producttable){
-            url = `http://206.189.145.94/api/v1/product/manufacture/list/${idd}/`
-        }else{
-            url = `http://206.189.145.94/api/v1/biscuit/${idd}/`; 
-        }
+        console.log(data);
+        // if (producttable){
+        //     url = `http://206.189.145.94/api/v1/product/manufacture/list/${idd}/`
+        // }else{
+        //     url = `http://206.189.145.94/api/v1/biscuit/${idd}/`; 
+        // }
+        // console.log(url);
         $.ajax({
             type: "PUT",
             headers: {
@@ -286,29 +274,16 @@ $(document).ready(function(){
                 'Content-type': 'application/json',
                 'Authorization': `Token ${token}`
             },
-            url: url,
+            url: `http://206.189.145.94/api/v1/biscuit/${idd}/`,
             data: data,
         })
         .done(function(data){
-            location.reload();
+            // location.reload();
         })
         .fail(function(){
             alert("Internet yo'q");
         })
     })
-    
-    // $('#showtables').on('change', function(){
-    //     let text = $('#showtables').val();
-
-    //     if (text == 'product'){
-    //         producttable = true;
-    //         biscuittable = false;
-    //     }else{
-    //         biscuittable = true;
-    //         producttable = false;
-    //     }
-    //     warehouseproducts();
-    // })
 
     $('#search').keyup(function(){
         let count = 0;
@@ -318,12 +293,10 @@ $(document).ready(function(){
     function search_table(value, count){
         $('#client_table tbody tr').each(function(){
             let found = false;
-
             $(this).each(function(){
                 if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
                     found = true;
                     count++;
-
                 }
             })
             if (found){
@@ -331,16 +304,15 @@ $(document).ready(function(){
                 $("#counter").text(count + " ta topildi")
             }else{
                 $(this).hide();
+                $("#counter").text(count + " ta topildi");
             }
         })
     }
 
-    // End remove rows from form
-
     // Begin  save new type biscuit data to server
 
     $("form#formbiscuit").submit(function(event){
-        let biscuit = "", bisc_type = "", measr = "", price, desc = "yaxshi";
+        let biscuit = "", bisc_type = "", measr = "", price, desc = "yaxshi pechenie";
         
         event.preventDefault();
 
@@ -377,9 +349,14 @@ $(document).ready(function(){
                 .done(function(data){
                     location.reload();
                 })
-                .fail(function(){
-                    alert("Internet yo'q");
-                })    
+                .fail(function(xhr, errorThrown, status){
+                    info = xhr.responseText;
+                    if (status == 'Bad Request'){
+                        alert(info)
+                    }else{
+                        alert("Internet yo'q");
+                    }
+                })      
         }
         if (bisc_type == 'product'){
             producttable = true;
@@ -405,14 +382,19 @@ $(document).ready(function(){
             .done(function(data){
                 location.reload();
             })
-            .fail(function(res) {
-                alert("Internet yo'q");
-            })
+            .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+                if (status == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
         }   
       }
     })
 
-       // End save add retsept data to server
+    // End save add retsept data to server
 
     // Begin Save retsept biscuit data to server
     
@@ -506,9 +488,14 @@ $(document).ready(function(){
                 biscuits[count].appendChild(element);
             })
         })
-        .fail(function(){
-            alert("INternet yo'q");
-        })
+        .fail(function(xhr, errorThrown, status){
+            errorInfo = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(errorInfo)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
     }
 
     function getBiscuit(){
@@ -531,9 +518,14 @@ $(document).ready(function(){
                 biscuits[count].appendChild(element);
             })
         })
-        .fail(function(){
-            alert("INternet yo'q");
-        })
+        .fail(function(xhr, errorThrown, status){
+            errorInfo = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(errorInfo)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
     }
 
     function getproducts(){
@@ -556,10 +548,15 @@ $(document).ready(function(){
                 product[count].appendChild(element);
             })
         })
-        .fail(function(){                                                                                                                                                           
-            alert("INternet yo'q");
-            })  
-        }      
+        .fail(function(xhr, errorThrown, status){
+            errorInfo = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(errorInfo)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
+    }      
 
     function getproducts1(){
         $.ajax({
@@ -581,25 +578,22 @@ $(document).ready(function(){
                 product[count].appendChild(element);
             })
         })
-        .fail(function(){                                                                                                                                                           
-            alert("INternet yo'q");
-        })
+        .fail(function(xhr, errorThrown, status){
+            errorInfo = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(errorInfo)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
     }
 
     // End get information from data for select element
     
     function warehouseproducts() {
-        let url = "";
-
-        if (producttable){            
-            url = 'http://206.189.145.94/api/v1/product/manufacture/list/';
-        }else{
-            url = 'http://206.189.145.94/api/v1/biscuit/'
-        }
-
         $.ajax({
             type: "GET",
-            url: url,
+            url: 'http://206.189.145.94/api/v1/biscuit/',
             headers: {
                 'Authorization': `Token ${token}`
             },
@@ -636,5 +630,4 @@ $(document).ready(function(){
             }
         })
     }
-    
 })

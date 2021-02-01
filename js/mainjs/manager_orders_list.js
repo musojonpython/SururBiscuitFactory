@@ -11,8 +11,9 @@ $(document).ready(function(){
     $('#helperinfocheif').load('helperManager.html div#helperinfocheif');
 
     getBiscuit();
+    warehouseOrders();
 
-    $(document).on("click", "#undobutton", function(){
+    $(document).on("click", "#undoButton", function(){
         location.reload();
     })
 
@@ -86,31 +87,7 @@ $(document).ready(function(){
         div.appendChild(div0);
     })
     
-    function getBiscuit(){
-        $.ajax({
-            type: "GET",
-            url: "http://206.189.145.94/api/v1/biscuit/",
-            headers: {
-                'Authorization': `token ${token}`
-                },
-            })
-        .done(function(data){
-            let biscuits = document.querySelectorAll("#BiscuitName");
-            let count = biscuits.length - 1;
-        
-            data.forEach(elem=>{
-                let element = document.createElement("option");
-                element.textContent = elem.name;
-                element.setAttribute("value", elem.id);
-                biscuits[count].appendChild(element);
-                })
-            })
-        .fail(function(){
-            alert("Internet yo'q");
-            })
-    }
-    
-    $(document).on("click", "#editbutton", function(){
+    $(document).on("click", "#editButton", function(){
         $(this).nextAll().eq(0).css("display", "block");
         $(this).nextAll().eq(1).css("display", "block");
         let par = $(this).parent().parent();
@@ -118,16 +95,18 @@ $(document).ready(function(){
 
         for (let i = 2; i <= p; i++){
             let elem = par.children(`td:nth-child(${i})`);
-            elem.html(`<input style='width:100%' class="form-control" type='text' value='${elem.text()}' required/>`);
+            elem.html(
+                    `<input style='width:100%'  type='text' value='${elem.text()}' required/>`
+                );
 
             if (i == 2) {
                 elem.html(
-                    `<select class="select2_single form-control" tabindex="1" style="width: 100%;" id="BiscuitName"></select>`
+                    `<select tabindex="1" style="width: 100%;" id="BiscuitName"></select>`
                 )
             }
             if (i == 3){
                 elem.html(
-                    `<select class="select2_single form-control" tabindex="1" style="width: 100%;">
+                    `<select tabindex="1" style="width: 100%;">
                         <option value="pending">Zakaz berildi</option>
                         <option value="completed">Tugatilgan</option>
                     </select>`
@@ -137,7 +116,7 @@ $(document).ready(function(){
         getBiscuit();
     })
 
-    $(document).on("click", "#saveupdatebutton", function(){
+    $(document).on("click", "#saveUpdateButton", function(){
         let data = {}, name;
         let par = $(this).parent().parent();
         let p = par.children().length - 3;
@@ -150,7 +129,7 @@ $(document).ready(function(){
         status = elem.children().val();
 
         elem = par.children().eq(3);
-        weight = parseInt(elem.children().val());
+        weight = elem.children().val();
 
         elem = par.children().eq(4);
         comment = elem.children().val();
@@ -163,14 +142,13 @@ $(document).ready(function(){
         console.log(data, orderId);
 
         $.ajax({
-            type: "PUT",
+            type: 'put',
             headers: {
-                'Accept':'application/json, text/plain, */*',
-                'Content-type': 'application/json',
                 'Authorization': `Token ${token}`
             },
-            url: `http://206.189.145.94/api/v1/order/client/orders/${orderId}/`,
             data: data,
+            url: `http://206.189.145.94/api/v1/order/client/orders/${orderId}/`,
+            
         })
         .done(function(data){
             // location.reload();
@@ -179,7 +157,7 @@ $(document).ready(function(){
             console.log(xhr)
             infojson = xhr.responseText
             
-            if (errorThrown == 'Bad Request'){
+            if (errorThrown == 'Bad Request' || status == 'Bad Request'){
                  alert(infojson)
             }else{
                  alert("Internet yo'q");
@@ -255,13 +233,11 @@ $(document).ready(function(){
                 url: 'http://206.189.145.94/api/v1/order/client/orders/',
                 data: data,
                 headers:{
-                    'Accept':'application/json, text/plain, */*',
-                    'Content-type': 'application/json',
                     'Authorization': `token ${token}`
                 },
             })
             .done(function(data){
-                location.reload();
+                // location.reload();
             })
             .fail(function(xhr, errorThrown, status){
                 info = xhr.responseText;
@@ -279,6 +255,30 @@ $(document).ready(function(){
         search_table($(this).val(), count);
     })
 
+    function getBiscuit(){
+        $.ajax({
+            type: "GET",
+            url: "http://206.189.145.94/api/v1/biscuit/",
+            headers: {
+                'Authorization': `token ${token}`
+                },
+            })
+        .done(function(data){
+            let biscuits = document.querySelectorAll("#BiscuitName");
+            let count = biscuits.length - 1;
+        
+            data.forEach(elem=>{
+                let element = document.createElement("option");
+                element.textContent = elem.name;
+                element.setAttribute("value", elem.id);
+                biscuits[count].appendChild(element);
+                })
+            })
+        .fail(function(){
+            alert("Internet yo'q");
+            })
+    }
+
     function search_table(value, count){
         $('#ordersTable tbody tr').each(function(){
             let found = false;
@@ -293,10 +293,10 @@ $(document).ready(function(){
                 $('#counter').text(count + " ta topildi");
             }else{
                 $(this).hide();
+                $("#counter").text(count + " ta topildi");
             }
         })
     }
-    warehouseOrders();
 
     function warehouseOrders() {
         $.ajax({
@@ -316,7 +316,7 @@ $(document).ready(function(){
                 let orderId = elem.id;
 
                 date = created_date.slice(0, 10);
-                time = created_date.slice(11, 16);
+                time = created_date.slice(12, 16);
                 if (status === 'pending') {
                     status = 'Zakaz berilgan';
                 }
@@ -333,13 +333,16 @@ $(document).ready(function(){
                     <td>${date}</td>
                     <td>${time}</td>
                     <td style="display: flex; flex-direction: row">
-                        <p style="font-size: 20px; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
+                        <p style="font-size: 20px; margin-right: 10px; cursor:pointer" 
+                            data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editButton">
                             <i class="fa fa-edit"></i>
                         </p>
-                        <p style="font-size: 20px; display: none; margin-right:10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
+                        <p style="font-size: 20px; display: none; margin-right:10px; cursor:pointer" 
+                            data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveUpdateButton">
                             <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
                         </p>
-                        <p style="font-size: 20px; display:none; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
+                        <p style="font-size: 20px; display:none; margin-right: 10px; cursor:pointer" 
+                            data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undoButton">
                             <i class="fa fa-undo"></i>
                         </p>
                     </td>
@@ -348,13 +351,13 @@ $(document).ready(function(){
             })
                 document.getElementById('ordersList').innerHTML=output;
         })
-    .fail(function(xhr, errorThrown, status){
-            info = xhr.responseText;
-            if (status == 'Bad Request'){
-                alert(info)
-            }else{
-                alert("Internet yo'q");
-            }
+        .fail(function(xhr, errorThrown, status){
+                info = xhr.responseText;
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(info)
+                }else{
+                    alert("Internet yo'q");
+                }
         })    
     }
 })

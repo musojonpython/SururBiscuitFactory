@@ -12,7 +12,8 @@ $(document).ready(function(){
     
     tableStaffSalary();
     getstaff();
-
+    tableStaffWages();
+    
     $('button#resetForm').click(function(){
         location.reload();
     })
@@ -248,7 +249,6 @@ $(document).ready(function(){
     })
 
     function getstaff(){
-        
         $.ajax({
             type: "GET",
             url: "http://206.189.145.94/api/v1/user/filter/?role=staff",
@@ -394,7 +394,7 @@ $(document).ready(function(){
         })
     }
     
-    tableStaffWages();
+    
 
     function tableStaffWages(){
         $.ajax({

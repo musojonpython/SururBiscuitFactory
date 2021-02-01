@@ -76,6 +76,7 @@ $(document).ready(function(){
                 $('#counter').html(count + ' ta topildi');
             }else{
                 $(this).hide();
+                $('#counter').html(count + ' ta topildi');
             }
         })
     }

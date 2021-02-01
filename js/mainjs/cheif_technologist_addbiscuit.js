@@ -5,6 +5,7 @@ $(document).ready(function(){
     if (mycookie === "false" || mycookie == undefined){
         window.open("index.html", "_self")   
     }
+
     let token = Cookies.get('cheifTechnologistToken');
 
     $('#helpersubmenu').load('helpercheifTechnologist.html div#helpersubmenu');
@@ -14,21 +15,43 @@ $(document).ready(function(){
     getBiscuit();
     getStaff();
     
+    $('#search').keyup(function(){
+        let count = 0;
+        search_table($(this).val(), count)
+    })
 
-    $("form#addbiscuitform").submit(function(event){
+    function search_table(value, count){
+        $('#clientTable tbody tr').each(function(){
+            let found = false;
+            $(this).each(function(){
+                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                    found = true;
+                    count++;
+                }
+            })
+            if (found){
+                $(this).show();
+                $('#counter').text(count + " ta topildi");
+            }else{
+                $(this).hide();
+                $("#counter").text(count + " ta topildi")
+            }
+
+        })
+    }
+    // addBiscuitForStaff
+    $("form#addWholeBiscuitForm").submit(function(event){
         event.preventDefault();
 
         let count = event.target.length - 3;
-        let biscuitid, quantity, staff;
+        let biscuitid, quantity;
 
         for (let i = 0; i < count; i++){
             biscuitid = parseFloat(event.target[i].value); i++;
-            staff = (event.target[i].value); i++;
             quantity = parseFloat(event.target[i].value);
 
             let data = {
                 quantity: quantity,
-                staff: staff,
                 biscuit: biscuitid
             }
 
@@ -45,17 +68,13 @@ $(document).ready(function(){
                 }
             })
             .done(function(json){
-                // location.reload();
+                location.reload();
             })
            .fail(function(xhr, status, errorThrown){
-               console.log(xhr);
-               console.log(status);
-               console.log(errorThrown);
-               infojson = xhr.responseText
-               infojson = infojson[0];
-               
-               if (errorThrown == 'Bad Request'){
-                    alert(infojson)
+               errorInfo = xhr.responseText;
+
+               if (status == 'Bad Request' || errorThrown == 'Bad Request' ){
+                    alert(errorInfo)
                }else{
                     alert("Internet yo'q");
                }
@@ -63,19 +82,60 @@ $(document).ready(function(){
         }
     })
 
+    $("form#addBiscuitStaffForm").submit(function(event){
+        event.preventDefault();
+
+        let quantity, staff, count;
+        count = event.target.length - 3;
+
+        for (let i = 0; i < count; i++){
+            staff = parseFloat(event.target[i].value); i++;
+            quantity = parseFloat(event.target[i].value);
+
+            let data = {
+                staff: staff,
+                biscuit_quantity: quantity
+            }
+
+            data = JSON.stringify(data);
+            
+            $.ajax({
+                type: 'post',
+                url: `http://206.189.145.94/api/v1/staff/biscuit/add/`,
+                data: data,
+                headers: {
+                    'Accept':'application/json, text/plain, */*',
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${token}`
+                }
+            })
+            .done(function(json){
+                location.reload();
+            })
+            .fail(function(xhr, status, errorThrown){
+                errorInfo = xhr.responseText;
+ 
+                if (status == 'Bad Request' || errorThrown == 'Bad Request' ){
+                     alert(errorInfo)
+                }else{
+                     alert("Internet yo'q");
+                }
+            })
+        }
+    })
+
     // Begin creating dynamic rows for Retsept
 
-    $("button#addretseptrow").click(function(){
-        getStaff();
+    $("button#AddRowWholeBiscuit").click(function(){
         getBiscuit();
 
         let div, div0, input1, div1, div2;
 
-        div = document.querySelector("#addretseptrowId");
+        div = document.querySelector("#addWholeBiscuitRowId");
         div0 = document.createElement("div");
         div0.classList.add('row');
 
-        for (let i = 1; i <= 3; i++){
+        for (let i = 1; i <= 2; i++){
             div1 = document.createElement("div");
             div1.classList.add("col");
         
@@ -92,15 +152,6 @@ $(document).ready(function(){
                 input1.style.width = "300px";
             }
             if (i == 2){
-                input1 = document.createElement("select")
-                input1.setAttribute("tabindex", "0");
-                input1.setAttribute("id", "staffname");
-                input1.classList.add("form-control");
-                input1.classList.add("select2_single");
-                input1.style.marginLeft = "20px";
-                input1.style.width = "300px";
-            }
-            if (i == 3){
                 input1 = document.createElement("input");
                 input1.setAttribute("required", "required");
                 input1.setAttribute("type", "number");
@@ -116,11 +167,61 @@ $(document).ready(function(){
     })
     
     // End creating dynamic row for Retsept
-
     // Begin remove rows from form
   
-    $("button#removeretseptrow").click(function(){
-        let div = document.querySelector("#addretseptrowId");
+    $("button#RemoveRowWholeBiscuit").click(function(){
+        let div = document.querySelector("#addWholeBiscuitRowId");
+        let count = div.childElementCount;
+        if (count > 1){
+            div.removeChild(div.lastChild);
+        }
+    })
+
+    $("button#addRowBiscuitStaff").click(function(){
+        getStaff();
+
+        let div, div0, input1, div1, div2;
+
+        div = document.querySelector("#addBiscuitStaffId");
+        div0 = document.createElement("div");
+        div0.classList.add('row');
+
+        for (let i = 1; i <= 2; i++){
+            div1 = document.createElement("div");
+            div1.classList.add("col");
+        
+            div2 = document.createElement("div");
+            div2.classList.add("form-group");    
+
+            if (i == 1){
+                input1 = document.createElement("select")
+                input1.setAttribute("tabindex", "0");
+                input1.setAttribute("id", "staffname");
+                input1.classList.add("form-control");
+                input1.classList.add("select2_single");
+                input1.style.marginLeft = "20px";
+                input1.style.width = "300px";
+            }
+            if (i == 2){
+                input1 = document.createElement("input");
+                input1.setAttribute("required", "required");
+                input1.setAttribute("type", "number");
+                input1.classList.add("form-control");
+                input1.style.marginLeft = "20px";
+            }
+            div2.appendChild(input1);
+            div1.appendChild(div2);
+            div0.appendChild(div1);
+        }
+
+        div.appendChild(div0);
+    })
+    
+    // End creating dynamic row for Retsept
+    // Begin remove rows from form
+  
+    $("button#removeRowBiscuitStaff").click(function(){
+        let div = document.querySelector("#addBiscuitStaffId");
         let count = div.childElementCount;
         if (count > 1){
             div.removeChild(div.lastChild);
@@ -204,30 +305,6 @@ $(document).ready(function(){
        })
     })
 
-    $('#search').keyup(function(){
-        let count = 0;
-        search_table($(this).val(), count)
-    })
-
-    function search_table(value, count){
-        $('#clientTable tbody tr').each(function(){
-            let found = false;
-            $(this).each(function(){
-                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
-                    found = true;
-                    count++;
-                }
-            })
-            if (found){
-                $(this).show();
-                $('#counter').text(count + " ta topildi");
-            }else{
-                $(this).hide();
-            }
-
-        })
-    }
-
     // End remove rows from form
 
     // Begin  get information from data for select element
@@ -257,7 +334,6 @@ $(document).ready(function(){
     }
 
     function getStaff(){
-        
         $.ajax({
             type: "GET",
             url: "http://206.189.145.94/api/v1/user/filter/?role=staff",
@@ -268,13 +344,12 @@ $(document).ready(function(){
         .done(function(data){
             let staff = document.querySelectorAll("#staffname");
             count = staff.length - 1;
-            console.log(data)
             data.forEach(elem=>{
                     fio = ""
                     element = document.createElement("option");
                     fio = elem.first_name + " " + elem.last_name;
                     element.textContent = fio;
-                    element.setAttribute("value", elem.user);
+                    element.setAttribute("value", elem.id);
                     staff[count].appendChild(element);
                 })
             })
@@ -284,7 +359,7 @@ $(document).ready(function(){
     }    
 
     function warehouseProduceProduct() {
-        console.log("worked")
+        
         $.ajax({
             type: "GET",
             url: 'http://206.189.145.94/api/v1/biscuit/staff/produce/',
@@ -342,5 +417,4 @@ $(document).ready(function(){
     }
 
     // End get information from data for select element
-
 })

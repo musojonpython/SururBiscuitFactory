@@ -33,6 +33,7 @@ $(document).ready(function(){
                 $('#counter').text(count + ' ta topildi');
             }else{
                 $(this).hide();
+                $("#counter").text(count + " ta topildi")
             }
         })
     }
@@ -77,7 +78,7 @@ $(document).ready(function(){
                 alert("Internet yo'q");
             })
             }    
-})
+    })
 
     // remove new rows new type product
     $("button#removenewtypeproductrow").click(function(){
@@ -112,7 +113,7 @@ $(document).ready(function(){
                 input1.classList.add("select2_single");
                 input1.setAttribute("id", "clientId");
                 input1.style.width = '13rem';
-            }else{
+            }if(i == 1){
                 input1 = document.createElement("input")
                 input1.setAttribute("type", "text");
                 input1.setAttribute("required", "required");
@@ -136,6 +137,13 @@ $(document).ready(function(){
                 option.appendChild(document.createTextNode("litr"))
                 option.value = "litr"
                 input1.appendChild(option);
+            }
+            if (i == 4){
+                input1 = document.createElement("textarea");
+                input1.style.width = "100%";
+                input1.classList.add("form-control");
+                // input1.style.marginLeft = "20px";
+                input1.setAttribute("rows", "1");
             }
             div2.appendChild(input1);
             div1.appendChild(div2);
@@ -204,7 +212,7 @@ $(document).ready(function(){
         .fail(function(){
             alert("Internet yo'q");
         })
-       })
+    })
     
     // Draw products from data
     function warehouseproducts() {

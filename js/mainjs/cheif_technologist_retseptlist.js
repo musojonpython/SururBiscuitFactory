@@ -41,6 +41,7 @@ $(document).ready(function(){
                 $('#counter').text(count + " ta topildi");
             }else{
                 $(this).hide();
+                $('#counter').text(count + " ta topildi");
             }
         })
     }

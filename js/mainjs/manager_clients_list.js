@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
         let mycookie = Cookies.get("manager");
-        alert(mycookie);
+        
         if(mycookie == "false" || mycookie == undefined){
             window.open("index.html", "_self");
         }
@@ -265,6 +265,7 @@ $(document).ready(function(){
                     $('#counter').html(count + ' ta topildi');
                 }else{
                     $(this).hide();
+                    $("#counter").text(count + " ta topildi");
                 }
             })
         }

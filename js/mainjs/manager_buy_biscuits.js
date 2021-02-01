@@ -361,13 +361,14 @@ $(document).ready(function(){
         })
         .done (function(vitaldata){
                 let output = "";
+                console.log(vitaldata);
                 vitaldata.forEach(elem=>{
                     size = 1;
                     let sale_price1, total_price1;
                     
-                    let {biscuit:{id}, biscuit:{name}, quantity, 
+                    let {id, biscuit:{name}, quantity, 
                             client:{company}, payment_type, modified_date, 
-                            currency, biscuit:{unit_of_measurement}, comment, objid} = elem;
+                            currency, biscuit:{unit_of_measurement}, comment} = elem;
                     
                     if (payment_type == 'credit_card'){
                         payment_type = "Plastik yoki bank o'tkazma"
@@ -390,6 +391,7 @@ $(document).ready(function(){
                         },
                     })
                     .done(function(data){
+                        console.log(data);
                         let {sale_price,  default_price} = data;
                         sale_price1 = sale_price;
                         default_price1 = default_price
@@ -400,7 +402,7 @@ $(document).ready(function(){
                         total_price1 = sale_price * quantity;   
                         output =  output + `
                         <tr>
-                            <th data-id=${objid} id="namecompany" scope="row">${size}</th>
+                            <th data-id=${id} id="namecompany" scope="row">${size}</th>
                             <td>${name}</td>
                             <td>${quantity}</td>
                             <td>${unit_of_measurement}</td>
@@ -452,6 +454,7 @@ $(document).ready(function(){
                 $('#counter').html(count + ' ta topildi');
             }else{
                 $(this).hide();
+                $("#counter").text(count + " ta topildi");
             }
         })
     }

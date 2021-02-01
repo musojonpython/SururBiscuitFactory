@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
-    // let mycookie = Cookies.get("director");
-    // if (mycookie == "false" || mycookie == undefined){
-    //     window.open("index.html", "_self");
-    // }
+    let mycookie = Cookies.get("director");
+    if (mycookie == "false" || mycookie == undefined){
+        window.open("index.html", "_self");
+    }
 
     let token = Cookies.get("directorToken");
     
@@ -26,6 +26,44 @@ $(document).ready(function(){
         search_table2($(this).val(), count)
     })
     
+    function search_table(value, count){
+        $('#client_table tbody tr').each(function(){
+            let found = false;
+            $(this).each(function(){
+                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                    found = true;
+                    count++;
+                }
+            })
+            if (found){
+                $(this).show();
+                $('#counter').html(count + ' ta topildi');
+            }else{
+                $(this).hide();
+                $('#counter').html(count + ' ta topildi');
+            }
+        })
+    }
+
+    function search_table2(value, count){
+        $('#client_table2 tbody tr').each(function(){
+            let found = false;
+            $(this).each(function(){
+                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                    found = true;
+                    count++;
+                }
+            })
+            if (found){
+                $(this).show();
+                $('#counter2').html(count + ' ta topildi');
+            }else{
+                $(this).hide();
+                $('#counter2').html(count + ' ta topildi');
+            }
+        })
+    }
+
     // makegraph()
     function makegraph(){
         var ctx = document.getElementById('test').getContext('2d');
@@ -277,42 +315,6 @@ $(document).ready(function(){
             })   
     }
     
-    function search_table(value, count){
-        $('#client_table tbody tr').each(function(){
-            let found = false;
-            $(this).each(function(){
-                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
-                    found = true;
-                    count++;
-                }
-            })
-            if (found){
-                $(this).show();
-                $('#counter').html(count + ' ta topildi');
-            }else{
-                $(this).hide();
-            }
-        })
-    }
-
-    function search_table2(value, count){
-        $('#client_table2 tbody tr').each(function(){
-            let found = false;
-            $(this).each(function(){
-                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
-                    found = true;
-                    count++;
-                }
-            })
-            if (found){
-                $(this).show();
-                $('#counter2').html(count + ' ta topildi');
-            }else{
-                $(this).hide();
-            }
-        })
-    }
-
     $("button#hidetable").click(function(){
         $("#hidetable").css("display", "none");
         biscuitcosts();

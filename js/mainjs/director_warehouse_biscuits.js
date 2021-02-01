@@ -186,10 +186,11 @@ $(document).ready(function(){
                 }
             })
             if(found){
-                $("#counter").text(count + " ta topildi")
+                $("#counter").text(count + " ta topildi");
                 $(this).show();
             }else{
                 $(this).hide();
+                $("#counter").text(count + " ta topildi");
             }
         })
     }

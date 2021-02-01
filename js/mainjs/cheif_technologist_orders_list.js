@@ -44,17 +44,18 @@ $(document).ready(function(){
         status = elem.children().val();
 
         elem = par.children().eq(3);
-        weight = parseInt(elem.children().val());
+        console.log(elem.text());
+        weight = parseFloat(elem.text());
 
         elem = par.children().eq(4);
-        comment = elem.children().val();
+        comment = elem.text();
 
         data.biscuit = biscuitId
         data.quantity = weight;
         data.status = status;
         data.comment = comment;
         data = JSON.stringify(data);
-        console.log(data, orderId);
+        console.log(data, orderId, weight);
 
         $.ajax({
             type: "PUT",
@@ -63,17 +64,17 @@ $(document).ready(function(){
                 'Content-type': 'application/json',
                 'Authorization': `Token ${token}`
             },
-            url: `http://206.189.145.94/api/v1/order/client/orders/id=${orderId}/`,
+            url: `http://206.189.145.94/api/v1/order/client/orders/${orderId}/`,
             data: data,
         })
         .done(function(data){
-            location.reload();
+            // location.reload();
         })
         .fail(function(xhr, status, errorThrown){
-            console.log(xhr, status)
+            console.log(xhr, status, errorThrown)
             infojson = xhr.responseText
             
-            if (status == 'Bad Request'){
+            if (errorThrown == 'Bad Request'){
                  alert(infojson)
             }else{
                  alert("Internet yo'q");
@@ -145,11 +146,11 @@ $(document).ready(function(){
                 $('#counter').text(count + " ta topildi");
             }else{
                 $(this).hide();
+                $("#counter").text(count + " ta topildi");
             }
         })
     }
     
-
     function warehouseOrders() {
         $.ajax({
             type: "get",
@@ -169,7 +170,7 @@ $(document).ready(function(){
                 let orderId = elem.id;
 
                 date = created_date.slice(0, 10);
-                console.log(created_date) 
+                console.log(data) 
                 time = created_date.slice(11, 16);
                 if (status === 'pending') {
                     status = 'Zakaz berilgan';

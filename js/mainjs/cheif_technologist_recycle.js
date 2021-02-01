@@ -11,7 +11,7 @@ $(document).ready(function(){
     $('#helperinfocheif').load('helpercheifTechnologist.html div#helperinfocheif' )
 
     getBiscuit();
-    warehouseproducts();
+    warehouseProducts();
 
     // Begin creating dynamic rows for Retsept
 
@@ -125,9 +125,14 @@ $(document).ready(function(){
             .done(function(data){
                 location.reload();
             })
-            .fail(function(){
-                alert("Internet yo'q")
-            })
+            .fail(function(xhr, errorThrown, status){
+                errorInfo = xhr.responseText;
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(errorInfo)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
         }
     })
     // End save retsept biscuit data to server
@@ -153,13 +158,18 @@ $(document).ready(function(){
                 biscuits[count].appendChild(element);
             })
         })
-        .fail(function(){
-            alert("Internet yo'q");
-        })
-        }
+        .fail(function(xhr, errorThrown, status){
+            errorInfo = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(errorInfo)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
+    }
 
     $(document).on("click", "#selectoptions", function(){
-        warehouseproducts()
+        warehouseProducts()
     })
 
     $(document).on("click", "#undobutton", function(){
@@ -175,12 +185,12 @@ $(document).ready(function(){
         for (let i = 3; i <= p; i++){
             let elem = par.children(`td:nth-child(${i})`);
             if (i == 3){
-                elem.html(`<select class="select2_single form-control" tabindex="1" style="width: 100%;">
+                elem.html(`<select tabindex="1" style="width: 100%;">
                 <option value="unrecyclable">Brak</option>
                 <option value="recyclable">Drabilka</option>
                 </select>`)
             }else{
-                elem.html(`<input style='width:100%' class="form-control" type='text' value='${elem.text()}' required/>`)
+                elem.html(`<input style='width:70%'  type='text' value='${elem.text()}' required/>`)
             }
         }
     })
@@ -249,11 +259,12 @@ $(document).ready(function(){
                 $('#counter').text(count + " ta topildi");
             }else{
                 $(this).hide();
+                $('#counter').text(count + " ta topildi");
             }
         })
     }
 
-    function warehouseproducts() {
+    function warehouseProducts() {
         let option = "";
         let turi = "";
 
@@ -274,7 +285,7 @@ $(document).ready(function(){
                     size++;
                     let {biscuit:{name}, quantity,  total_price, created, id} = elem;
                     created_date = created.slice(0, 10);
-
+                    created_time = created.slice(11, 16);
                     output =  output + `
                     <tr>
                         <th scope="row">${size}</th>
@@ -283,6 +294,7 @@ $(document).ready(function(){
                         <td>${quantity}</td>
                         <td>${total_price}</td>
                         <td>${created_date}</td>
+                        <td>${created_time}</td>
                         <td style="display: flex; flex-direction: row">
                         <p style="font-size: 20px; margin-right: 10px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
                             <i class="fa fa-edit"></i>
@@ -299,9 +311,14 @@ $(document).ready(function(){
             })
             document.getElementById('dynamictable').innerHTML=output;
         })
-        .fail(function(){
-            alert("Internet yo'q");
-        })
+        .fail(function(xhr, errorThrown, status){
+            errorInfo = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(errorInfo)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
         }else{
             turi = "Brak";
             $.ajax({
@@ -344,9 +361,14 @@ $(document).ready(function(){
                 })
                     document.getElementById('dynamictable').innerHTML=output;
             })
-            .fail(function(){
-                alert("Internet yo'q");
-            })
+            .fail(function(xhr, errorThrown, status){
+                errorInfo = xhr.responseText;
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(errorInfo)
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
         }
     }
     

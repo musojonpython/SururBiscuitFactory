@@ -43,6 +43,7 @@ $(document).ready(function(){
                 $('#counterProductTable').text(countProduct + " ta topildi");
             }else{
                 $(this).hide();
+                $('#counterProductTable').text(countProduct + " ta topildi");
             }
         })
     }
@@ -67,6 +68,7 @@ $(document).ready(function(){
                 $('#counterProductRetsept').text(count + " ta topildi");
             }else{
                 $(this).hide();
+                $('#counterProductRetsept').text(count + " ta topildi");
             }
         })
     }
