@@ -65,8 +65,34 @@ $(document).ready(function(){
     }
 
     // makegraph()
+    
+    testGraph();
+
+    function  testGraph(){
+        let labels1 = ['YES', 'YES BUT IN GREEN', 'YES BUT IN GREEN'];
+        let data1 = [20, 31, 20];
+        let color1 = ['#49A9EA', '#36CAAB', '#36CAAB'];
+
+        let myChart1 = document.getElementById("myChart").getContext('2d');
+        let chart1 = new Chart(myChart1, {
+            type: 'line', // doughnut
+            data: {
+                labels: labels1,
+                datasets: [{
+                    data: data1,
+                    backgroundColor: color1
+                }]
+            },
+            options: {
+                title: "Do you like dddd",
+                display: true
+            }
+        })
+    }
+
     function makegraph(){
-        var ctx = document.getElementById('test').getContext('2d');
+        var ctx = document.getElementById('myChart').getContext('2d');
+        console.log("🚀 ~ file: director_expense_biscuits.js ~ line 87 ~ makegraph ~ ctx", ctx)
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -104,8 +130,12 @@ $(document).ready(function(){
             }
         });
     }
+    // searchDataUsingDates();
+    $('button#searchDates').click(function(){
+        searchDataUsingDates();
+    });
 
-    function serchdatausingdate() {
+    function searchDataUsingDates() {
         date1 = $('#date1from').val()
         date2 = $('#date2to').val()
 
@@ -191,7 +221,8 @@ $(document).ready(function(){
             }
 
             graphdata["datasets"] = datasets;
-            console.log(graphdata);
+            console.log("🚀 ~ file: director_expense_biscuits.js ~ line 224 ~ .done ~ graphdata", graphdata)
+            
             var ctx = document.getElementById('myChart');
             var ctx = document.getElementById('myChart').getContext('2d');
             var ctx = $('#myChart');
@@ -199,7 +230,7 @@ $(document).ready(function(){
             var ctx = document.getElementById('myChart');
 
             var lineChart = new Chart(ctx,{
-                type: 'line',
+                type: 'doughnut',
                 data: graphdata,
                 options: {
                     animation: {
@@ -232,6 +263,7 @@ $(document).ready(function(){
                     }
                 }   
             })
+            console.log("🚀 ~ file: director_expense_biscuits.js ~ line 266 ~ .done ~ lineChart", lineChart)
         })
 
                

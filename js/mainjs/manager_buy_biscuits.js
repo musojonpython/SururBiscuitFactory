@@ -20,6 +20,7 @@ $(document).ready(function(){
 
     $('#search').keyup(function(){
         let count = 0;
+        // let searchWords = $(this).val();
         search_table($(this).val(), count)
     })
 
@@ -55,9 +56,15 @@ $(document).ready(function(){
             .done(function(json){
                 // location.reload();
             })
-            .fail(function(json){
-                alert("Internet yo'q");
-            })
+            .fail(function(xhr, errorThrown, status){
+                infojson = xhr.responseJSON;
+                
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(infojson['non_field_errors'][0])
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
 
             let data = {
                 "biscuit":biscuit,
@@ -83,9 +90,10 @@ $(document).ready(function(){
                 location.reload();
             })
             .fail(function(xhr, errorThrown, status){
-                info = xhr.responseText;
-                if (status == 'Bad Request'){
-                    alert(info)
+                infojson = xhr.responseJSON;
+                
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(infojson['non_field_errors'][0])
                 }else{
                     alert("Internet yo'q");
                 }
@@ -292,14 +300,15 @@ $(document).ready(function(){
         .done(function(json){
             location.reload();
         })
-        .fail(function(xhr, status, errorThrown){
-            info = xhr.responseJSON;
-            if (errorThrown == 'Bad Request'){
-                alert(info[0])
+        .fail(function(xhr, errorThrown, status){
+            infojson = xhr.responseJSON;
+            
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(infojson['non_field_errors'][0])
             }else{
                 alert("Internet yo'q");
             }
-        })
+        })    
     })
 
     function getClients(){
@@ -458,58 +467,5 @@ $(document).ready(function(){
             }
         })
     }
-    
-    // biscuitcosts();
-
-    // function biscuitcosts() {
-    //     $.ajax({
-    //         type: "get",
-    //         url: "http://206.189.145.94/api/v1/biscuit/take/price/",
-    //         headers: {
-    //             'Authorization': `Token ${token}`    
-    //         },
-    //     })
-    //     .done(function(json){
-    //         location.reload();
-    //     })
-    //     .fail(function(){
-    //         alert("Internet yo'q");
-    //     }) 
-    //     $.ajax({
-    //             type: "get",
-    //             url: "http://206.189.145.94/api/v1/biscuit/default/cost/",
-    //             headers: {
-    //                 'Authorization': `Token ${token}`    
-    //             },
-    //         })
-    //         .done(function(data){
-    //             let output = "", size = 1;
-
-    //             data.forEach(elem=>{
-    //                 size++;
-
-    //                 let {biscuit:{name}, price,  currency, modified_date, id} = elem;
-    //                 console.log(id);
-    //                 created_date = modified_date.slice(0, 10);
-    //                 time = modified_date.slice(11, 16);
-
-    //                 output =  output + `
-    //                 <tr>
-    //                     <th scope="row">${size}</th>
-    //                     <td data-id=${id} id="nameproduct">${name}</td>
-    //                     <td>${price}</td>
-    //                     <td>${currency}</td>
-    //                     <td>${created_date}</td>
-    //                     <td>${time}</td>
-    //                 </tr>
-    //                 `    
-    //             })
-    //             document.getElementById('dynamictablecost').innerHTML=output;
-    //         })
-    //         .fail(function(){
-    //             alert("Internet yo'q")
-    //         })
-    // }
-    
   
 })

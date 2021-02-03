@@ -127,21 +127,21 @@ $(document).ready(function(){
         }
     })
 
-    $(document).on("click", "#updatetaffSalary", function(){
+    $(document).on("click", "#updateStaffSalary", function(){
         let par = $(this).parent().parent();
         let for_who, quantity, cost, elem;
         
         elem = par.children().eq(0);
-        id = elem.attr("data-id")
+        id = parseInt(elem.attr("data-id"))
 
         elem = par.children().eq(1);
         for_who = elem.children().val();
         
         elem = par.children().eq(2);
-        quantity = elem.children().val();
+        quantity = parseFloat(elem.children().val());
         
         elem = par.children().eq(3);
-        cost = elem.children().val();
+        cost = parseFloat(elem.children().val());
         
 
         let data = {
@@ -150,6 +150,7 @@ $(document).ready(function(){
             cost: cost
         }
         data = JSON.stringify(data);
+        console.log(data);
         $.ajax({
             type: 'put',
             url: `http://206.189.145.94/api/v1/staff/salary/percentage/${id}/`,
@@ -161,7 +162,7 @@ $(document).ready(function(){
             }
         })
         .done(function(json){
-            location.reload();
+            // location.reload();
         })
        .fail(function(xhr, status, errorThrown){
            infojson = xhr.responseJSON
@@ -394,8 +395,6 @@ $(document).ready(function(){
         })
     }
     
-    
-
     function tableStaffWages(){
         $.ajax({
             type: 'get',

@@ -91,13 +91,13 @@ $(document).ready(function(){
                 'Authorization': `Token ${token}`
             },
         }).done(function(data){
-            let output = "", size = 1, role = "";
+            let output = "", size = 0, role = "";
 
             data.forEach(elem=>{
                 size++;
                 let {
                     user:{phone_number}, 
-                    // user:{date_joined},
+                    user:{date_joined},
                     user:{is_director},
                     user:{is_accountant},
                     user:{is_warehouseman},
@@ -143,26 +143,29 @@ $(document).ready(function(){
                     }
                 }
 
-                // created_date = date_joined.slice(0, 10);
-                // modified_time = date_joined.slice(11, 16);
+                created_date = date_joined.slice(0, 10);
+                modified_time = date_joined.slice(11, 16);
 
-                output += `
-                <tr>
-                <th scope="row">${size}</th>
-                <td id="nameproduct">${first_name}</td>
-                <td>${last_name}</td>
-                <td>${role}</td>
-                <td>${address}</td>
-                <td>${phone_number}</td>
-                
-            </tr>
-            `    
+                output += 
+                    `<tr>
+                        <th scope="row">${size}</th>
+                        <td id="nameproduct">${first_name}</td>
+                        <td>${last_name}</td>
+                        <td>${role}</td>
+                        <td>${address}</td>
+                        <td>${phone_number}</td>
+                        <td>${created_date}</td>
+                        <td>${modified_time}</td>
+                    </tr> `    
         })
-        $('#dynamicTable').html(output);
-
-        }).fail(function(){
-            alert("Internet yo'q")
+        $('#usersTable').html(output);
+        }).fail(function(xhr, errorThrown, status){
+            info = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(info)
+            }else{
+                alert("Internet yo'q");
+            }
         })
-        
     }
 })

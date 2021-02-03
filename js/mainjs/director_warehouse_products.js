@@ -5,6 +5,7 @@ $(document).ready(function () {
     if (mycookie == "false" || mycookie == undefined) {
         window.open('index.html', "_self");
     }
+    
     let token = Cookies.get("directorToken");
 
     $('#helpersubmenu').load('helperDirector.html div#helpersubmenu');
