@@ -163,7 +163,7 @@ $(document).ready(function(){
             console.log(data)
             // data = JSON.parse(data);
             // console.log(data);
-            
+            data = JSON.stringify(data);
             function onlyUnique(value, index, self) {
                 return self.indexOf(value) === index;
             }
