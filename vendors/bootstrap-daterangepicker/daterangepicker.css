@@ -170,7 +170,7 @@
   margin: 0;
   border-spacing: 0;
   border-collapse: collapse;
-}
+} 
 
 .daterangepicker td.available:hover, .daterangepicker th.available:hover {
   background-color: #eee;
@@ -386,3 +386,54 @@
     float: right; }
   .daterangepicker .drp-calendar.left {
     clear: none !important; } }
+
+@media(min-width:992px){
+  #menu_toggle{
+    display: none;
+  }
+  
+}
+
+#custom-dropdown{
+  position: relative;
+}
+.my-dropdown-menu{
+  display: flex;
+  flex-direction: column;
+  line-height: 30px;
+  position: absolute;
+  margin-left: 20px;
+  margin-top: -10px;
+  background-color: white;
+  z-index: 2;
+  width: 150px;
+  text-align: center;
+  transition: 0.3s;
+  color: black;
+  display: none;
+}
+.my-dropdown-menu .custom-dropdown-item{
+  color: black;
+}
+.my-dropdown-menu .custom-dropdown-item:hover{
+  background-color: rgb(196, 184, 184);
+}
+#custom-dropdown:hover .my-dropdown-menu{
+  display: flex;
+
+}
+@media(max-width:992px){
+  .dropdown-menu{
+   left: 108px !important;
+   width: 62px !important;
+  }
+  .dropdown-menu .show{
+    width: 62px !important;
+   }
+  .dropdown-item{
+    width: 62px !important;
+  }
+  .dropdown-item a {
+    width: 62px !important;
+  }
+}
