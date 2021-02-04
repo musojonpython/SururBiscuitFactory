@@ -72,12 +72,18 @@ $(document).ready(function(){
                 data: data,
             })
             .done(function(data){
-                // location.reload();
+                location.reload();
             })
-            .fail(function(){
-                alert("Internet yo'q");
-            })
-            }    
+            .fail(function(xhr, errorThrown, status){
+                infojson = xhr.responseJSON;
+                
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(infojson['non_field_errors'][0])
+                }else{
+                    alert("Internet yo'q");
+                }
+            })    
+        }    
     })
 
     // remove new rows new type product
@@ -209,9 +215,15 @@ $(document).ready(function(){
         .done(function(data){
             location.reload();
         })
-        .fail(function(){
-            alert("Internet yo'q");
-        })
+        .fail(function(xhr, errorThrown, status){
+            infojson = xhr.responseJSON;
+            
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(infojson['non_field_errors'][0])
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
     })
     
     // Draw products from data

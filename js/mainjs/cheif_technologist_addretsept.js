@@ -278,7 +278,7 @@ $(document).ready(function(){
             data: data,
         })
         .done(function(data){
-            // location.reload();
+            location.reload();
         })
         .fail(function(){
             alert("Internet yo'q");
