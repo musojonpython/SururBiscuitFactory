@@ -424,8 +424,9 @@
 }
 @media(max-width:992px){
   .dropdown-menu{
-   left: 108px !important;
+   left: 95px !important;
    width: 62px !important;
+   z-index: 1000 !important;
   }
   .dropdown-menu .show{
     width: 62px !important;
