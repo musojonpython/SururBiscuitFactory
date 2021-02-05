@@ -21,6 +21,7 @@
 
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
+    <link href="build/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -40,9 +41,8 @@
 
                     <nav class="nav navbar-nav">
                         <div class="row" style="margin-right: 0;">
-                            <div class="col-md-9 col-sm-9" style="display: flex; align-items: center;
-                            justify-content: center;">
-                                <h1 style="text-align: center; margin: 25px;">
+                            <div class="col-md-9 col-sm-9 center-text" >
+                                <h1 style="text-align: center;">
                                     Ishchi malumotlarini qo'shish
                                 </h1>
                             </div>
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="ln_solid">
                                         <div class="form-group">
-                                            <div class="col-md-6 offset-md-3">
+                                            <div class="col-md-6 offset-md-3 my-3">
                                                 <button type='submit' class="btn btn-primary">Saqlash</button>
                                                 <button type='reset' class="btn btn-success">O'chirish</button>
                                             </div>
@@ -129,13 +129,14 @@
                     <h4>Ishchilar ro'yxati</h4>
              </div>
              <hr>
-             <div style="display: flex; flex-direction: row;">
-                 <input type="text" style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
-                 <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
+             <div class="center-text">
+                 <input type="text" style="width: 60%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
+                 <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
              </div>
+             <div class="custom-table-container">
+
                 <div class="row">
-                    <div style="text-align: center;">
-                        <table class="table table-hover" style="margin-left: 20px;" id="client_table">
+                        <table class="table table-hover" id="client_table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th style="position: sticky; top: 5px;" scope="col">#</th>
