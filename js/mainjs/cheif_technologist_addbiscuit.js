@@ -70,15 +70,15 @@ $(document).ready(function(){
             .done(function(json){
                 location.reload();
             })
-           .fail(function(xhr, status, errorThrown){
-               errorInfo = xhr.responseText;
-
-               if (status == 'Bad Request' || errorThrown == 'Bad Request' ){
-                    alert(errorInfo)
-               }else{
+            .fail(function(xhr, errorThrown, status){
+                infojson = xhr.responseJSON;
+                
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(infojson['non_field_errors'][0])
+                }else{
                     alert("Internet yo'q");
-               }
-           })
+                }
+            })    
         }
     })
 
@@ -112,15 +112,15 @@ $(document).ready(function(){
             .done(function(json){
                 location.reload();
             })
-            .fail(function(xhr, status, errorThrown){
-                errorInfo = xhr.responseText;
- 
-                if (status == 'Bad Request' || errorThrown == 'Bad Request' ){
-                     alert(errorInfo)
+            .fail(function(xhr, errorThrown, status){
+                infojson = xhr.responseJSON;
+                
+                if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                    alert(infojson['non_field_errors'][0])
                 }else{
-                     alert("Internet yo'q");
+                    alert("Internet yo'q");
                 }
-            })
+            })    
         }
     })
 

@@ -68,7 +68,7 @@ $(document).ready(function(){
             data: data,
         })
         .done(function(data){
-            // location.reload();
+            location.reload();
         })
         .fail(function(xhr, status, errorThrown){
             console.log(xhr, status, errorThrown)
