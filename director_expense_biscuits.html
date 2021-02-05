@@ -21,8 +21,23 @@
     <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
+
+    <link href="build/css/style.css" type="text/css" rel="stylesheet">
+    <style>
+        canvas {
+            -moz-user-select: none;">
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        </style>
+        <style type="text/css">
+            /* Chart.js */
+            @keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}
+        </style>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"> </script>
         
+
 </head>
 
 <body class="nav-md" >
@@ -37,10 +52,10 @@
                     </div>
                     <nav class="nav navbar-nav">
                         <div class="row" style="margin-right: 0;">
-                            <div class="col-md-6 col-sm-6">
-                                <h1 style="text-align: center; margin-top: 10%;">Sotilgan pechenielar</h1>
+                            <div class="col-md-9 col-sm-9 center-text">
+                                <h1 style="text-align: center;">Sotilgan pechenielar</h1>
                             </div>
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-3 col-sm-3">
                                 <div id="helpercheifmenu"></div>
                             </div>
                         </div>
@@ -50,20 +65,22 @@
             <!-- page content -->
             <div class="right_col" role="main">
                 <hr>
-                <div class="row">
-                    <div class="col-md-5" style="display: flex; flex-direction: row;">
+                <div class="row" style="display: flex; align-items: center;"> 
+                    <div class="col-md-3" class="center-text">
                         <button class="btn btn-success" style="margin-left: 10px;" id="showtable">Tannarxni ko'rish</button>
                         <button class="btn btn-danger" style="margin-left: 10px; display: none;" id="hidetable">Tannarxni yopish</button>
                     </div>
-                    <div class="col-md-3" style="display: flex; flex-direction: row;">
-                        <h5 style="margin-right: 10px; margin-top: 8px;"> <label for="date1from">Dan:</label></h5>
+                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                        <label for="date1from" style="margin-top: 10px;" ><h5> Dan:</h5></label>
                         <input class="form-control" type="date"  id="date1from" value="2021-01-31" style="width: 170px;">
                     </div>
-                    <div class="col-md-4" style="display: flex; flex-direction: row;">
-                        <h5 style="margin-right: 10px; margin-top: 8px;"> <label for="date2to">Gacha:</label></h5> 
+                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                        <label for="date2to" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
                         <input class="form-control" type="date" id="date2to" value="2021-02-02" style="width: 170px;">
-                        <button class="btn btn-info" style="margin-left: 10px;" id="searchDates" >Qidirish</button>
                     </div>
+                    <div  class="col-md-3">
+                        <button class="btn btn-info" style="margin-left: 10px;" id="searchDates" >Qidirish</button>
+                        </div>
                 </div>
                 <hr>
                 <!-- /top tiles -->
@@ -80,10 +97,11 @@
                         <h4>Pechenie tannarxi</h4> 
                     </div>
                     <hr>
-                    <div style="display: flex; flex-direction: row;">
-                        <input type="text" style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" id="search2" class="search form-control" placeholder="Qidirish.."/>
-                        <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter2"></span>
+                    <div class="center-text">
+                        <input type="text" style="width: 60%; margin-bottom: 2%; margin-top: 2%;" id="search2" class="search form-control" placeholder="Qidirish.."/>
+                        <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 2%;" id="counter2"></span>
                     </div>
+                    <div class="custom-table-container">
                     <table class="table table-hover" style="margin-left: 30px;" id="client_table2">
                         <thead class="thead-dark">
                             <tr>
@@ -98,18 +116,20 @@
                         <tbody id="dynamictablecost"> </tbody>
                     </table>
                 </div>
+                </div>
                  <div> 
                     <hr>
                     <div style="text-align: center;">
                         <h4>Pechenie sotish tarixi</h4>
                     </div>
                     <hr>
-                    <div style="display: flex; flex-direction: row;">
+                    <div class="center-text">
                         <input type="text" id="search" class="search form-control" placeholder="Qidirish.."
-                                style="width: 50%; margin-left: 20%; margin-bottom: 2%; margin-top: 2%;" />
-                        <span style="color: acacac; font-size: medium; margin-left: 5%; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
+                                style="width: 60%; margin-bottom: 2%; margin-top: 2%;" />
+                        <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
                     </div>
-                    <table class="table table-hover" style="margin-left: 20px;" id="client_table">
+                    <div class="custom-table-container">
+                    <table class="table table-hover" id="client_table">
                         <thead class="thead-dark">
                             <tr>
                                 <th style="position: sticky; top: 5px;" scope="col">#</th>
@@ -128,6 +148,7 @@
                         </thead>
                         <tbody id="dynamictable"> </tbody>
                     </table>
+                </div>
                 </div>
             </div>
         </div>
