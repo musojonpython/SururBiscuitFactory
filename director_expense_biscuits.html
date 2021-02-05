@@ -61,20 +61,22 @@
             <!-- page content -->
             <div class="right_col" role="main">
                 <hr>
-                <div class="row">
-                    <div class="col-md-5" style="display: flex; flex-direction: row;">
+                <div class="row" style="display: flex; align-items: center;"> 
+                    <div class="col-md-3" class="center-text">
                         <button class="btn btn-success" style="margin-left: 10px;" id="showtable">Tannarxni ko'rish</button>
                         <button class="btn btn-danger" style="margin-left: 10px; display: none;" id="hidetable">Tannarxni yopish</button>
                     </div>
-                    <div class="col-md-3" style="display: flex; flex-direction: row;">
-                        <h5 style="margin-right: 10px; margin-top: 8px;"> <label for="date1from">Dan:</label></h5>
+                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                        <label for="date1from" style="margin-top: 10px;" ><h5> Dan:</h5></label>
                         <input class="form-control" type="date"  id="date1from" value="2021-01-31" style="width: 170px;">
                     </div>
-                    <div class="col-md-4" style="display: flex; flex-direction: row;">
-                        <h5 style="margin-right: 10px; margin-top: 8px;"> <label for="date2to">Gacha:</label></h5> 
+                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                        <label for="date2to" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
                         <input class="form-control" type="date" id="date2to" value="2021-02-02" style="width: 170px;">
-                        <button class="btn btn-info" style="margin-left: 10px;" id="searchDates" >Qidirish</button>
                     </div>
+                    <div  class="col-md-3">
+                        <button class="btn btn-info" style="margin-left: 10px;" id="searchDates" >Qidirish</button>
+                        </div>
                 </div>
                 <hr>
                 <!-- /top tiles -->
