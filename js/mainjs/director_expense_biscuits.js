@@ -66,7 +66,7 @@ $(document).ready(function(){
 
     // makegraph()
     
-    testGraph();
+    // testGraph();
 
     function  testGraph(){
         let labels1 = ['YES', 'YES BUT IN GREEN', 'YES BUT IN GREEN'];
@@ -91,51 +91,54 @@ $(document).ready(function(){
     }
 
     function makegraph(){
+        var ctx = document.getElementById('myChart');
         var ctx = document.getElementById('myChart').getContext('2d');
-        console.log("🚀 ~ file: director_expense_biscuits.js ~ line 87 ~ makegraph ~ ctx", ctx)
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
+        var ctx = $('#myChart');
+        var ctx = 'myChart';
+        // var ctx = document.getElementById('myChart');
+        searchDataUsingDates();
+
+        var myChart = new Chart(ctx,{
+            type: 'line',
+            data: graphdata,
             options: {
+                animation: {
+                duration: 2500 
+                    },
+                responsive: true,        
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
                 scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Sanasi"
+                        }
+                    }],
                     yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Og'irligi"
                         }
                     }]
                 }
-            }
-        });
+            } 
+        })
     }
     // searchDataUsingDates();
     $('button#searchDates').click(function(){
-        searchDataUsingDates();
+        makegraph();
     });
 
-    function searchDataUsingDates() {
+    async function searchDataUsingDates() {
         date1 = $('#date1from').val()
         date2 = $('#date2to').val()
 
@@ -160,6 +163,7 @@ $(document).ready(function(){
             console.log(data)
             // data = JSON.parse(data);
             // console.log(data);
+            data = JSON.stringify(data);
             function onlyUnique(value, index, self) {
                 return self.indexOf(value) === index;
             }
@@ -221,54 +225,13 @@ $(document).ready(function(){
             }
 
             graphdata["datasets"] = datasets;
-            console.log("🚀 ~ file: director_expense_biscuits.js ~ line 224 ~ .done ~ graphdata", graphdata)
+            // console.log("🚀 ~ file: director_expense_biscuits.js ~ line 224 ~ .done ~ graphdata", graphdata)
             
-            var ctx = document.getElementById('myChart');
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var ctx = $('#myChart');
-            var ctx = 'myChart';
-            var ctx = document.getElementById('myChart');
-
-            var lineChart = new Chart(ctx,{
-                type: 'doughnut',
-                data: graphdata,
-                options: {
-                    animation: {
-                    duration: 2500 
-                        },
-                    responsive: true,        
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: "Sanasi"
-                            }
-                        }],
-                        yAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: "Og'irligi"
-                            }
-                        }]
-                    }
-                }   
-            })
-            console.log("🚀 ~ file: director_expense_biscuits.js ~ line 266 ~ .done ~ lineChart", lineChart)
+           
         })
-
-               
-
     }
+
+   
              
      function warehouseproducts() {
         let size = 1
@@ -350,12 +313,12 @@ $(document).ready(function(){
     $("button#hidetable").click(function(){
         $("#hidetable").css("display", "none");
         biscuitcosts();
-        $("#tannarxitable").css("display", "none");
+        $("#tannarxiTable").css("display", "none");
     })
 
     $("button#showtable").click(function(){
         $("button#hidetable").css("display", "block");
-        $("#tannarxitable").css("display", "block");
+        $("#tannarxiTable").css("display", "block");
         biscuitcosts();
         
     })

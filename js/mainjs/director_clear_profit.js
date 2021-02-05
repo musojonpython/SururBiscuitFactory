@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('#helpersubmenu').load('helperDirector.html div#helpersubmenu');
     $('#helpercheifmenu').load('helperDirector.html div#helpercheifmenu');
     
-    // makegraph();
+    makegraph();
     // warehouseproducts();
 
     function makegraph(){
