@@ -422,19 +422,3 @@
   display: flex;
 
 }
-@media(max-width:992px){
-  .dropdown-menu{
-   left: 95px !important;
-   width: 62px !important;
-   z-index: 1000 !important;
-  }
-  .dropdown-menu .show{
-    width: 62px !important;
-   }
-  .dropdown-item{
-    width: 62px !important;
-  }
-  .dropdown-item a {
-    width: 62px !important;
-  }
-}
