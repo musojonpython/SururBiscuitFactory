@@ -71,6 +71,10 @@
 #collapseSeven7>.custom-menu{
     padding: 0 4px !important;
 }
+@media(max-width: 1024px){
+    .custom-table-container{
+    overflow-x: scroll;
+    }}
 @media(max-width: 992px){
     .custom-table-container{
     overflow-x: scroll;
