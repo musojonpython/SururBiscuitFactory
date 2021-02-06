@@ -12,7 +12,7 @@ $(document).ready(function(){
 
     warehouseproducts();
     // serchdatausingdate();
-    biscuitcosts();
+    // biscuitcosts();
 
     
 
@@ -64,190 +64,153 @@ $(document).ready(function(){
         })
     }
 
-    // makegraph()
+    let datesFromPages = false;
+    makingGraph();
     
-    testGraph();
-
-    function  testGraph(){
-    //     const chart = document.getElementById("myChart");
-    //     console.log("🚀 ~ file: director_expense_biscuits.js ~ line 73 ~ testGraph ~ chart", chart)
-    //     let lineChart = new Chart(Chart, {
-    //         type: 'line',
-    //         data:{
-    //             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //             datasets: [{
-    //                 label: 'My First dataset',
-    //                 backgroundColor: 'rgb(255, 99, 132)',
-    //                 borderColor: 'rgb(255, 99, 132)',
-    //                 data: [0, 10, 5, 2, 20, 30, 45]
-    //             }
-    //         ]
-    //     }
-    // })
+    $('button#makeDynamicGraph').click(function(){
+        datesFromPages = true;
+        makingGraph();
+    })
+    
+    function makingGraph(){
         
-        // let labels1 = ['YES', 'YES BUT IN GREEN', 'YES BUT IN GREEN'];
-        // let data1 = [20, 31, 20];
-        // let color1 = ['#49A9EA', '#36CAAB', '#36CAAB'];
+        var biscuitName = []
+        var products = {}
+        var vitalData = []
 
-        // let myChart1 = document.getElementById("myChart").getContext('2d');
-        // let chart1 = new Chart(myChart1, {
-        //     type: 'line', // doughnut
-        //     data: {
-        //         labels: labels1,
-        //         datasets: [{
-        //             data: data1,
-        //             backgroundColor: color1
-        //         }]
-        //     },
-        //     options: {
-        //         title: "Do you like dddd",
-        //         display: true
-        //     }
-        // })
-    }
+        getBiscuitName('http://206.189.145.94/api/v1/biscuit/');
 
-    function makegraph(){
-        var ctx = document.getElementById('myChart');
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var ctx = $('#myChart');
-        var ctx = 'myChart';
-        // var ctx = document.getElementById('myChart');
-        searchDataUsingDates();
-
-        var myChart = new Chart(ctx,{
-            type: 'line',
-            data: graphdata,
-            options: {
-                animation: {
-                duration: 2500 
-                    },
-                responsive: true,        
-                tooltips: {
-                    mode: 'index',
-                    intersect: false
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Sanasi"
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Og'irligi"
-                        }
-                    }]
-                }
-            } 
-        })
-    }
-    // searchDataUsingDates();
-    $('button#searchDates').click(function(){
-        makegraph();
-    });
-
-    let graphdata = {};
-
-    function searchDataUsingDates() {
-        date1 = $('#date1from').val()
-        date2 = $('#date2to').val()
-
-        let now = new Date(date2);
-
-        let daysOfYearlist = [];
-
-        for (let d = new Date(date1); d <= now; d.setDate(d.getDate() + 1)) {
-            let p = d;
-            p = p.toISOString().slice(0, 10);
-            daysOfYearlist.push(p);
-        }
-        let url = `http://206.189.145.94/api/v1/biscuit/saled/filter/?date_one=${date1}&date_two=${date2}`
-        // console.log(url);
-
-        $.ajax({
-            type:"get",
-            url: url,
+        function doAjaxCall(ajaxurl) { 
+            return $.ajax({
+            url: ajaxurl,
+            type: 'GET',
             headers: {'Authorization': `Token ${token}`}
-        })
-        .done(function(data){
-            console.log(data)
-            // data = JSON.parse(data);
-            // console.log(data);
-            data = JSON.stringify(data);
-            function onlyUnique(value, index, self) {
-                return self.indexOf(value) === index;
+            });
+        };
+    
+        async function getBiscuitName(ajaxurl) {
+            try {
+            biscuitName = await doAjaxCall(ajaxurl)
+            getProducts('http://206.189.145.94/api/v1/biscuit/saled/filter');
+            } catch(err) {
+            console.log(err);
             }
+        }
 
-            function getRandomColor() {
-                let letters = '0123456789abcdef';
-                let color = '#';
-                for (var i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
+        async function getProducts(ajaxurl) {
+            try {
+                products = await doAjaxCall(ajaxurl)
+                getDataForGraph();
+                startDrawGraph();
+            } catch(err) {
+                console.log(err);
             }
+        }
+        
+        function getDataForGraph(){
+            let graphData = {}
+            let dataPoints = []
+            let dataPoint = {}
+            let today = new Date();
+            let startDate = new Date();
 
-            let count = data.length;
-            let productlistid = [];
-            let productlistname = [];
-            let datelist = [];
-
-
-            for (let i = 0; i < count; i++) {
-                datelist.push(data[i].date);
-                productlistname.push(data[i].biscuit["name"]);
-                productlistid.push(data[i].biscuit["id"]);
-
+            if (datesFromPages) {
+                startDate = $('#startDate').val();
+                today = $('#finishDate').val();
+                today = new Date(today);
+            } else {
+                startDate = startDate.setDate(startDate.getDate() - 30);
+                today = today.setDate(today.getDate() + 1);
             }
+            console.log("🚀 ~ file: director_warehouse_products.js ~ line 136 ~ getDataForGraph ~ today", today)
+            console.log("🚀 ~ file: director_warehouse_products.js ~ line 135 ~ getDataForGraph ~ startDate", startDate)
+            
+            
+            let daysOfYearlist = [];
+            
+            for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
+                let p = d;
+                p = p.toISOString().slice(0, 10);
+                daysOfYearlist.push(p);
+            }
+            console.log("🚀 ~ file: director_warehouse_products.js ~ line 140 ~ getDataForGraph ~ daysOfYearlist", daysOfYearlist)
 
-            datelist = datelist.filter(onlyUnique);
-            productlistid = productlistid.filter(onlyUnique);
-            productlistname = productlistname.filter(onlyUnique);
+            for (let i = 0; i < biscuitName.length; i++){
+                graphData.type = "spline";
+                graphData.axisYType = "secondary";
+                graphData.name = biscuitName[i].name;
+                graphData.showInLegend = true;
+                graphData.markerSize = 0;
+                graphData.dataPoints = "dps";
 
-            let productcount = productlistid.length;
-
-            graphdata["labels"] = daysOfYearlist;
-            let datasets = [];
-            let datas = [];
-            let tests = {};
-
-            for (let i = 0; i < productcount; i++) {
-                tests.label = (productlistname[i]).toString();
-                tests.fill = false;
-                tests.borderColor = getRandomColor();
-                tests.pointBackgroundColor = getRandomColor();
-
-                for (let j = 0; j < daysOfYearlist.length; j++) {
-                    let summa = 0;
-                    for (let k = 0; k < count; k++) {
-                        if (data[k].biscuit["id"] == productlistid[i]) {
-                            if (daysOfYearlist[j] == data[k].created_date) {
-                                summa += parseFloat(data[k].quantity);
+                for (let j = 0; j < daysOfYearlist.length; j++){
+                    let quantity = 0;
+                    for (let z = 0; z < products.length; z++){
+                        if (biscuitName[i].name == products[z].biscuit.name){
+                            let orderDate = products[z].created_date;
+                            if (daysOfYearlist[j] == orderDate){
+                                quantity += parseFloat(products[z].quantity);
                             }
                         }
                     }
-                    datas.push(summa);
+                    dataPoint.x = new Date (daysOfYearlist[j])
+                    dataPoint.y = parseFloat(quantity)
+                    dataPoints.push(dataPoint);
+                    dataPoint = {};
                 }
-                tests.data = datas;
-                datasets.unshift(tests);
-                tests = {};
-                datas = [];
+                graphData.dataPoints = dataPoints;
+                vitalData.push(graphData);
+                dataPoints = [];
+                graphData = {};
             }
+        }
+        
+        function startDrawGraph(){
 
-            graphdata["datasets"] = datasets;
-            // console.log("🚀 ~ file: director_expense_biscuits.js ~ line 224 ~ .done ~ graphdata", graphdata)
-            
-           
-        })
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Kirim bo'lgan maxsulotlar tarixi"
+                },
+                axisX: {
+                    valueFormatString: "MMM YYYY DD"
+                },
+                axisY2: {
+                    title: "Og'irligi",
+                    // prefix: "$",
+                    suffix: "Kg"
+                },
+                toolTip: {
+                    shared: true
+                },
+                legend: {
+                    cursor: "pointer",
+                    verticalAlign: "top",
+                    horizontalAlign: "center",
+                    dockInsidePlotArea: true,
+                    itemclick: toogleDataSeries
+                },
+                data: vitalData 
+                
+            });
+                console.log("🚀 ~ file: director_warehouse_products.js ~ line 209 ~ startDrawGraph ~ vitalData", vitalData)
+            chart.render();
+
+            function toogleDataSeries(e){
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else{
+                    e.dataSeries.visible = true;
+                }
+                chart.render();
+            }
+        }
     }
+
+  
+    // searchDataUsingDates();
+    // $('button#searchDates').click(function(){
+    //     makegraph();
+    // });
 
      function warehouseproducts() {
         let size = 1
@@ -325,54 +288,5 @@ $(document).ready(function(){
                 alert("Internet yo'q");
             })   
     }
-    
-    $("button#hidetable").click(function(){
-        $("#hidetable").css("display", "none");
-        biscuitcosts();
-        $("#tannarxiTable").css("display", "none");
-    })
-
-    $("button#showtable").click(function(){
-        $("button#hidetable").css("display", "block");
-        $("#tannarxiTable").css("display", "block");
-        biscuitcosts();
-        
-    })
-
-    function biscuitcosts() {
-        $.ajax({
-                type: "get",
-                url: "http://206.189.145.94/api/v1/biscuit/default/cost/",
-                headers: {
-                    'Authorization': `Token ${token}`    
-                },
-            })
-            .done(function(data){
-                let output = "", size = 1;
-
-                data.forEach(elem=>{
-                    size++;
-
-                    let {biscuit:{name}, price,  currency, modified_date, id} = elem;
-                    created_date = modified_date.slice(0, 10);
-                    time = modified_date.slice(11, 16);
-
-                    output =  output + `
-                    <tr>
-                        <th scope="row">${size}</th>
-                        <td data-id=${id} id="nameproduct">${name}</td>
-                        <td>${price}</td>
-                        <td>${currency}</td>
-                        <td>${created_date}</td>
-                        <td>${time}</td>
-                    </tr>
-                    `    
-                })
-                document.getElementById('dynamictablecost').innerHTML=output;
-            })
-            .fail(function(){
-                alert("Internet yo'q")
-            })
-    }
-
+   
 })

@@ -10,29 +10,26 @@
     <link rel="icon" href="images/sururlogo.png" type="image/ico" />
 
     <title>«SURUR» </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- JQVMap -->
     <link href="vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
 
     <link href="build/css/style.css" type="text/css" rel="stylesheet">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"> </script>
-        
-
 </head>
 
 <body class="nav-md" >
     <div class="container body">
         <div class="main_container">
-            <div id="helpersubmenu" style="position: sticky; top: 0;"> </div>
+            <div id="helpersubmenu" style="position: sticky; top: 0;"></div>
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
@@ -41,8 +38,8 @@
                     </div>
                     <nav class="nav navbar-nav">
                         <div class="row" style="margin-right: 0;">
-                            <div class="col-md-9 col-sm-9 center-text">
-                                <h1 style="text-align: center;">Sotilgan pechenielar</h1>
+                            <div class="col-md-9 col-sm-9" style="display: flex; align-items: center; justify-content: center;">
+                                <h1 style="text-align: center;">Ombordagi Maxsulotlar</h1>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                 <div id="helpercheifmenu"></div>
@@ -53,41 +50,34 @@
             </div>
             <!-- page content -->
             <div class="right_col" role="main">
-                <hr>
                 <div class="row" style="display: flex; align-items: center;"> 
                     <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
                         <label for="date1from" style="margin-top: 10px;" ><h5> Dan:</h5></label>
-                        <input class="form-control" type="date"  id="date1from" value="2021-01-31" style="width: 170px;">
+                        <input class="form-control" type="date"  id="startDate" value="2021-01-31" style="width: 170px;">
                     </div>
                     <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
                         <label for="date2to" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
-                        <input class="form-control" type="date" id="date2to" value="2021-02-02" style="width: 170px;">
+                        <input class="form-control" type="date" id="finishDate" value="2021-02-02" style="width: 170px;">
                     </div>
                     <div  class="col-md-3">
                         <button class="btn btn-info" style="margin-left: 10px;" id="makeDynamicGraph" >Qidirish</button>
                     </div>
                 </div>
-                <!-- /top tiles -->
-                <!-- ChartJs line graph begin -->
                 <div class="row">
                     <div class="col">
                         <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                     </div>
                 </div>
+                <div style="text-align: center;">
+                    <h4 style="text-align: center;">&nbsp</h4>
+                </div>
 
-                <!-- ChartJs line graph end -->
-                <hr>
-                 <div> 
-                    <div style="text-align: center;">
-                        <h4>Pechenie sotish tarixi</h4>
-                    </div>
-                    <hr>
-                    <div class="center-text">
-                        <input type="text" id="search" class="search form-control" placeholder="Qidirish.."
-                                style="width: 60%; margin-bottom: 2%; margin-top: 2%;" />
-                        <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
-                    </div>
-                    <div class="custom-table-container">
+                <div class="center-text">
+                    <input type="text" style="width: 60%; margin-bottom: 2%; margin-top: 1%;" id="search" class="search form-control" placeholder="Qidirish.."/>
+                    <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 1%;" id="counter"></span>
+              
+                </div>
+                <div class="custom-table-container">
                     <table class="table table-hover" id="client_table">
                         <thead class="thead-dark">
                             <tr>
@@ -95,33 +85,31 @@
                                 <th style="position: sticky; top: 5px;" scope="col">Nomi</th>
                                 <th style="position: sticky; top: 5px;" scope="col">Og'irligi</th>
                                 <th style="position: sticky; top: 5px;" scope="col">O'lchov birligi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Sotilgan narxi</th>
+                                <th style="position: sticky; top: 5px;" scope="col">Narxi</th>
+                                <th style="position: sticky; top: 5px;" scope="col">Umumiy narx</th>
+                                <th style="position: sticky; top: 5px;" scope="col">O'rtacha narxi</th>
                                 <th style="position: sticky; top: 5px;" scope="col">Pul birligi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Tolov turi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Umumiy pul</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Kompaniya</th>
                                 <th style="position: sticky; top: 5px;" scope="col">Izoh</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Sotilgan kun</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Sotilgan vaqt</th>
+                                <th style="position: sticky; top: 5px;" scope="col">Sana</th>
+                                <th style="position: sticky; top: 5px;" scope="col">Vaqt</th>
                             </tr>
                         </thead>
-                        <tbody id="dynamictable"> </tbody>
+                        <tbody id="dynamictable">
+                        </tbody>
                     </table>
-                </div>
                 </div>
             </div>
         </div>
     </div>
 
         <!-- jQuery -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
         <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <!-- FastClick -->
         <script src="vendors/fastclick/lib/fastclick.js"></script>
         <!-- Flot -->
         <script src="vendors/Flot/jquery.flot.js"></script>
-
         <script src="vendors/Flot/jquery.flot.time.js"></script>
         <!-- DateJS -->
         <script src="vendors/DateJS/build/date.js"></script>
@@ -130,6 +118,7 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
         <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-        <script src="/js/mainjs/director_expense_biscuits.js"></script>
+        
+        <script src="/js/mainjs/director_trade_analytics.js"></script>
 </body>
 </html>
