@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
-    let mycookie = Cookies.get('director')
+    let mycookie = Cookies.get('director');
     if (mycookie == "false" || mycookie == undefined){
-        window.open("index.html", "_self")
+        window.open("index.html", "_self");
     }
     let token = Cookies.get("directorToken");
 
@@ -13,7 +13,9 @@ $(document).ready(function(){
         let count = 0;
         search_table($(this).val(), count)
     })
+
     warehouseClients();
+    
     function warehouseClients(){
         $.ajax({
             type: "get",
