@@ -14,7 +14,7 @@ $(document).ready(function(){
     // serchdatausingdate();
     biscuitcosts();
 
-    let graphdata = {};
+    
 
      $('#search').keyup(function(){
         let count = 0;
@@ -66,28 +66,44 @@ $(document).ready(function(){
 
     // makegraph()
     
-    // testGraph();
+    testGraph();
 
     function  testGraph(){
-        let labels1 = ['YES', 'YES BUT IN GREEN', 'YES BUT IN GREEN'];
-        let data1 = [20, 31, 20];
-        let color1 = ['#49A9EA', '#36CAAB', '#36CAAB'];
+    //     const chart = document.getElementById("myChart");
+    //     console.log("🚀 ~ file: director_expense_biscuits.js ~ line 73 ~ testGraph ~ chart", chart)
+    //     let lineChart = new Chart(Chart, {
+    //         type: 'line',
+    //         data:{
+    //             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    //             datasets: [{
+    //                 label: 'My First dataset',
+    //                 backgroundColor: 'rgb(255, 99, 132)',
+    //                 borderColor: 'rgb(255, 99, 132)',
+    //                 data: [0, 10, 5, 2, 20, 30, 45]
+    //             }
+    //         ]
+    //     }
+    // })
+        
+        // let labels1 = ['YES', 'YES BUT IN GREEN', 'YES BUT IN GREEN'];
+        // let data1 = [20, 31, 20];
+        // let color1 = ['#49A9EA', '#36CAAB', '#36CAAB'];
 
-        let myChart1 = document.getElementById("myChart").getContext('2d');
-        let chart1 = new Chart(myChart1, {
-            type: 'line', // doughnut
-            data: {
-                labels: labels1,
-                datasets: [{
-                    data: data1,
-                    backgroundColor: color1
-                }]
-            },
-            options: {
-                title: "Do you like dddd",
-                display: true
-            }
-        })
+        // let myChart1 = document.getElementById("myChart").getContext('2d');
+        // let chart1 = new Chart(myChart1, {
+        //     type: 'line', // doughnut
+        //     data: {
+        //         labels: labels1,
+        //         datasets: [{
+        //             data: data1,
+        //             backgroundColor: color1
+        //         }]
+        //     },
+        //     options: {
+        //         title: "Do you like dddd",
+        //         display: true
+        //     }
+        // })
     }
 
     function makegraph(){
@@ -138,7 +154,9 @@ $(document).ready(function(){
         makegraph();
     });
 
-    async function searchDataUsingDates() {
+    let graphdata = {};
+
+    function searchDataUsingDates() {
         date1 = $('#date1from').val()
         date2 = $('#date2to').val()
 
@@ -231,8 +249,6 @@ $(document).ready(function(){
         })
     }
 
-   
-             
      function warehouseproducts() {
         let size = 1
         $.ajax({

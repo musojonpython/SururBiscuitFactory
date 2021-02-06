@@ -11,16 +11,13 @@ $(document).ready(function(){
         $('#helpersubmenu').load('helperManager.html div#helpersubmenu');
         $('#helperinfocheif').load('helperManager.html div#helperinfocheif');
 
-        warehouseProducts();
+        warehouseClients();
 
         $(document).on("click", "#undobutton", function(){
             location.reload();
         })
 
-        $('#search').keyup(function(){
-            let count = 0;
-            search_table($(this).val(), count)
-        })
+       
 
         $("form").submit(function (event){
             event.preventDefault();
@@ -193,7 +190,12 @@ $(document).ready(function(){
             })
         })
 
-        function warehouseProducts(){
+        $('#search').keyup(function(){
+            let count = 0;
+            search_table($(this).val(), count)
+        })
+        
+        function warehouseClients(){
             $.ajax({
                 type: "get",
                 headers: {

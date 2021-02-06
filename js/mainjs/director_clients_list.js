@@ -1,15 +1,22 @@
 $(document).ready(function(){
 
-    let mycookie = Cookies.get('director')
+    let mycookie = Cookies.get('director');
     if (mycookie == "false" || mycookie == undefined){
-        window.open("index.html", "_self")
+        window.open("index.html", "_self");
     }
     let token = Cookies.get("directorToken");
 
     $('#helpersubmenu').load('helperDirector.html div#helpersubmenu');
     $('#helpercheifmenu').load('helperDirector.html div#helpercheifmenu');
 
-    function warehouseProducts(){
+    $('#search').keyup(function(){
+        let count = 0;
+        search_table($(this).val(), count)
+    })
+
+    warehouseClients();
+    
+    function warehouseClients(){
         $.ajax({
             type: "get",
             headers: {
@@ -43,7 +50,7 @@ $(document).ready(function(){
                 </tr>
                 `
             })
-            document.getElementById('dynamictable').innerHTML=output;
+            document.getElementById('dynamicClientsData').innerHTML=output;
         })
         .fail(function(xhr, errorThrown, status){
             info = xhr.responseText;
@@ -74,4 +81,5 @@ $(document).ready(function(){
             }
         })
     }
+
 })
