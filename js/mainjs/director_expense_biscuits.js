@@ -14,7 +14,7 @@ $(document).ready(function(){
     // serchdatausingdate();
     biscuitcosts();
 
-    let graphdata = {};
+    
 
      $('#search').keyup(function(){
         let count = 0;
@@ -153,6 +153,8 @@ $(document).ready(function(){
     $('button#searchDates').click(function(){
         makegraph();
     });
+
+    let graphdata = {};
 
     function searchDataUsingDates() {
         date1 = $('#date1from').val()

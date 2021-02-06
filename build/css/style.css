@@ -1,122 +1,124 @@
 /* button{
     padding-left: 100px;
 } */
-.custom-table-container{
-    width: 96%;
-    margin: auto;
-    box-sizing: border-box;
+.custom-table-container {
+  width: 96%;
+  margin: auto;
+  box-sizing: border-box;
 }
-.center-text{
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.center-text {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.custom-menu{
-    width: 100%;
+.custom-menu {
+  width: 100%;
 }
-.custom-menu a{
-    color: ghostwhite;
+.custom-menu a {
+  color: ghostwhite;
 }
-.dropdown-item{
-    line-height: 10px !important;
+.dropdown-item {
+  line-height: 10px !important;
+}
+.dropdown-item:hover {
+  background-color: #0056b3;
+}
+.with-100 {
+  width: 100% !important;
+}
+#collapseOne1 {
+  width: 100% !important;
+}
+#collapseTwo2 {
+  width: 100% !important;
+}
+#collapseThree3 {
+  width: 100% !important;
+}
+#collapseFour4 {
+  width: 100% !important;
+}
+#collapseFive5 {
+  width: 100% !important;
+}
+#collapseSix6 {
+  width: 100% !important;
+}
+#collapseSeven7 {
+  width: 100% !important;
+}
+#collapseEight8 {
+  width: 100% !important;
+}
 
+#headingFour4 {
+  padding: 0px 4px !important;
 }
-.dropdown-item:hover{
-    background-color: #0056b3;
+#headingFour4 a {
+  padding: 6px 14px !important;
 }
-.with-100{
-    width: 100% !important;
+#collapseFour4 > .custom-menu {
+  padding: 0 4px !important;
 }
-#collapseOne1{
-    width: 100% !important;
+#headingSeven7 {
+  padding: 0px 4px !important;
 }
-#collapseTwo2{
-    width: 100% !important;
+#headingSeven7 a {
+  padding: 6px 14px !important;
 }
-#collapseThree3{
-    width: 100% !important;
+#collapseSeven7 > .custom-menu {
+  padding: 0 4px !important;
 }
-#collapseFour4{
-    width: 100% !important;
-}
-#collapseFive5{
-    width: 100% !important;
-}
-#collapseSix6{
-    width: 100% !important;
-}
-#collapseSeven7{
-    width: 100% !important;
-}
-#collapseEight8{
-    width: 100% !important;
+div.canvasjs-chart-credit {
+  display: none;
 }
 
-#headingFour4{
-    padding: 0px 4px !important;
-}
-#headingFour4 a{
-    padding: 6px 14px !important;
-}
-#collapseFour4>.custom-menu{
-    padding: 0 4px !important;
-}
-#headingSeven7{
-    padding: 0px 4px !important;
-}
-#headingSeven7 a{
-    padding: 6px 14px !important;
-}
-#collapseSeven7>.custom-menu{
-    padding: 0 4px !important;
-}
-@media(max-width: 992px){
-    .custom-table-container{
+@media (max-width: 992px) {
+  .custom-table-container {
     overflow-x: scroll;
-    }
-    .center-text>h1{
-        box-sizing: border-box;
-        padding: 0 30px;
-        font-size: 30px;
-    }
-    .dropdown-item{
-        font-size: 10px !important;
-        padding: 5px 5px !important;
-        margin-bottom: 0px !important;
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: left !important;
-
-    }
-    .dropdown-item a{
-        padding: 5px 5px !important;
-        margin-bottom: 0px !important;
-    }
-    #headingFour4{
-        padding: 0px 0px !important;
-    }
-    #headingSeven7{
-        padding: 0px 0px !important;
-    }
-    #headingSeven7 a{
-        padding: 0px 4px !important;
-    }
-    #headingFour4 a{
-        padding: 0px 4px !important;
-    }
-    #headingSeven7 i{
-        font-size: 10px !important;
-    }
-    #headingFour4 i{
-        font-size: 10px !important;
-    }
+  }
+  .center-text > h1 {
+    box-sizing: border-box;
+    padding: 0 30px;
+    font-size: 30px;
+  }
+  .dropdown-item {
+    font-size: 10px !important;
+    padding: 5px 5px !important;
+    margin-bottom: 0px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: left !important;
+  }
+  .dropdown-item a {
+    padding: 5px 5px !important;
+    margin-bottom: 0px !important;
+  }
+  #headingFour4 {
+    padding: 0px 0px !important;
+  }
+  #headingSeven7 {
+    padding: 0px 0px !important;
+  }
+  #headingSeven7 a {
+    padding: 0px 4px !important;
+  }
+  #headingFour4 a {
+    padding: 0px 4px !important;
+  }
+  #headingSeven7 i {
+    font-size: 10px !important;
+  }
+  #headingFour4 i {
+    font-size: 10px !important;
+  }
 }
-@media(max-width:500px){
-    .custom-select{
-        width: 225px !important;
-    }
+@media (max-width: 500px) {
+  .custom-select {
+    width: 225px !important;
+  }
 }
-.custom-select{
-    width: 190px !important;
+.custom-select {
+  width: 190px !important;
 }
