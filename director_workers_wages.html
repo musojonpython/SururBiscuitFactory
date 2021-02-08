@@ -59,7 +59,7 @@
                                 <div class="col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <label style="text-align: center; font-size: large;">Lavozimi<span style="color:red"> *</span>
-                                            <select class="select2_single form-control" tabindex="0">
+                                            <select class="select2_single form-control custom-select" tabindex="0">
                                                 <option value="technological_man">Bosh texnolog</option>
                                                 <option value="staff">Ishchi</option>
                                                 <option value="manager">Manager</option>
@@ -111,6 +111,103 @@
                 </div>
             </div>
             <!-- End Table Staff Salary -->
+<<<<<<< HEAD
+=======
+            <!-- End Staff Salary -->
+
+            <!-- Begin Take Biscuit Form -->
+            <div class="row">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align: center; font-size: 20px">Korxonadan olingan pechenielar</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="x_content">
+                        <form id="takeBiscuitForm" style="display: flex; align-items: center;">
+                            <div class="row"> 
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">Ishchi Nomi<span style="color:red">&nbsp*</span>
+                                            <select id="staffname" class="select2_single form-control  custom-select" tabindex="0" style="width: 100%;"></select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">O'girligi(kg)<span style="color:red">&nbsp*</span>
+                                            <input class="form-control" required="required" type="text" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="text-align: center; font-size: large;">Summa(so'm)<span style="color:red">&nbsp*</span>
+                                            <input class="form-control" required="required" type="number"/>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3" style="display: flex; align-items: center; margin-top: 5px;">
+                                    <div class="form-group" style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <button type='submit' style="margin-bottom: 0;" class="btn btn-primary" id="addRetseptForm">Saqlash</button>
+                                        <button type='button' style="margin-bottom: 0;" class="btn btn-danger" id="resetForm">Qayta&nbspyuklash</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="page-title" style="text-align: center;">
+                    <h3>Ishchilar uchun oylik miqdori</h3>
+                </div>
+                    <div class="custom-table-container">
+                    <table class="table table-hover" >
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">#</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Ism Familiya</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">O'girligi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Summa</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Olingan kun</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Olingan vaqt</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Jarayonlar</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="dataTakeBiscuit"> </tbody>
+                    </table>
+                </div>
+            
+            </div>
+            <!-- Begin Take Biscuit Form -->
+
+            <div class="row">
+                <div class="page-title" style="text-align: center;">
+                    <h3>To'lanishi kerak bo'lgan oyliklar </h3>
+                </div>
+                    <div class="custom-table-container">
+                    <table class="table table-hover" >
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">#</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Familiyasi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Ism</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Lavozimi</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Telefon raqami</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Ishlab chiqargan pechenie og'irligi"> Pechenie(kg)</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Bir kg pechenie uchun to'lanadigan pul">Necha so'mdan</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;" data-toggle="tooltip" data-placement="bottom" title="Hamma harajatlardan ayrilgan sof oylik">Ish haqqi(so'm)</th>
+                                <th scope="col" style="font-size: 15px; position: sticky; top: 5px;">Holati</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="dataStaffWages"> </tbody>
+                    </table>
+                </div>
+            </div>
+>>>>>>> 9cd86afc7646bc2b52cc1701487d8c7b3a5df23c
         </div>
     </div>
 
