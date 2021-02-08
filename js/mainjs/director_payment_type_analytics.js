@@ -1,25 +1,71 @@
-$(document).ready(function () {
+$(document).ready(function(){
 
-    mycookie = Cookies.get("director");
-
-    if (mycookie == "false" || mycookie == undefined) {
-        window.open('index.html', "_self");
+    let mycookie = Cookies.get('director')
+    if (mycookie == "false" || mycookie == undefined){
+        window.open("index.html", "_self")
     }
-    
     let token = Cookies.get("directorToken");
 
     $('#helpersubmenu').load('helperDirector.html div#helpersubmenu');
     $('#helpercheifmenu').load('helperDirector.html div#helpercheifmenu');
 
-    warehouseProducts();    
+    warehouseproducts();
 
+    function warehouseproducts(){
+        $.ajax({
+            type: "get",
+            url: 'http://206.189.145.94/api/v1/biscuit/company/sale/',
+            headers: {
+                'Authorization': `Token ${token}`    
+            },
+        })
+        .done(function(data){
+            let output = "", size = 0;
+
+            data.forEach(elem=>{
+                size++;
+                let {
+                    biscuit:{name}, quantity, created_date, id, payment_type, 
+                    status, client:{company}, comment, currency, biscuit:{unit_of_measurement}} = elem;
+                if (payment_type === "debt")          payment_type = "Nasiya";
+                if (payment_type === "cash")          payment_type = "Naqd pul";
+                if (payment_type === "credit_card")   payment_type = "Plastik yoki bank o'tkazma";
+                if (status === "pending") status = "Kutish holatida";
+                else status = "Maxsulot yetkazilgan";
+
+                output =  output + `
+                <tr>
+                    <th scope="row">${size}</th>
+                    <td data-id=${id} id="nameproduct">${name}</td>
+                    <td>${quantity}</td>
+                    <td>${unit_of_measurement}</td>
+                    <td>${company}</td>
+                    <td>${payment_type}</td>
+                    <td>${status}</td>
+                    <td>${comment}</td>
+                    <td>${created_date}</td>
+                </tr>
+                `    
+            })
+            document.getElementById('saledBiscuitList').innerHTML=output;
+        })
+        .fail(function(xhr, errorThrown, status){
+            info = xhr.responseText;
+            if (status == 'Bad Request' || errorThrown == 'Bad Request'){
+                alert(info)
+            }else{
+                alert("Internet yo'q");
+            }
+        })    
+    }
+    
     $('#search').keyup(function(){
         let count = 0;
-        searchTable($(this).val(), count);
+        search_table($(this).val(), count)
     })
 
-    function searchTable(value, count){
-        $("#productTable tbody tr").each(function(){
+    function search_table(value, count){
+        $('#client_table tbody tr').each(function(){
             let found = false;
             $(this).each(function(){
                 if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
@@ -28,55 +74,13 @@ $(document).ready(function () {
                 }
             })
             if(found){
+                $("#counter").text(count + " ta topildi");
                 $(this).show();
-                $('#counter').text(count + ' ta topildi');
             }else{
                 $(this).hide();
                 $("#counter").text(count + " ta topildi");
             }
         })
-    }
-
-    function warehouseProducts() {
-        $.ajax({
-            type: 'get',
-            headers: {
-                'Authorization': `token ${token}`
-            },
-            url: 'http://206.189.145.94/api/v1/warehouse/products/',
-            success: function (data) {
-                let output = "", count = 0, size = 0;
-
-                data.forEach(elem => {
-                    count++;
-                })
-
-                data.forEach(elem => {
-                    size++;
-                    let { product: { name }, product: { unit_of_measurement },
-                        product: { modified_date }, average_price, quantity, total_price,
-                        product: { description } } = elem;
-
-                    modified_date = modified_date.slice(0, 10);
-                    output = output + `
-                <tr>
-                    <th scope="row">${size}</th>
-                    <td>${name}</td>
-                    <td>${quantity}</td>
-                    <td>${unit_of_measurement}</td>
-                    <td>${average_price}</td>
-                    <td>${total_price}</td>
-                    <td>${description}</td>
-                    <td>${modified_date}</td>
-                </tr>
-                `
-                })
-                document.getElementById('dynamicTable').innerHTML = output;
-            },
-            failure: function (res) {
-                alert("Internet yo'q");
-            }
-        });
     }
 
     let datesFromPages = false;
@@ -87,41 +91,30 @@ $(document).ready(function () {
         datesFromPages = true;
         makingGraph();
     })
-    
-    function makingGraph(){
-        var ProductsName = []
-        var products = {}
+
+    function makingGraph() {
+        var paymentTypeName =["debt", "cash", "credit_card"]
+        var saledBiscuit = {}
         var vitalData = []
-
-        getProductsName('http://206.189.145.94/api/v1/product/');
-
+        
         function doAjaxCall(ajaxurl) { 
             return $.ajax({
-            url: ajaxurl,
-            type: 'GET',
-            headers: {'Authorization': `Token ${token}`}
+                url: ajaxurl,
+                type: 'GET',
+                headers: {'Authorization': `Token ${token}`}
             });
         };
-    
-        async function getProductsName(ajaxurl) {
+        getSaledBiscuit('http://206.189.145.94/api/v1/biscuit/company/sale/');
+        
+        async function getSaledBiscuit(ajaxurl) {
             try {
-            ProductsName = await doAjaxCall(ajaxurl)
-            getProducts('http://206.189.145.94/api/v1/product/add/quantity/');
-            } catch(err) {
-            console.log(err);
-            }
-        }
-
-        async function getProducts(ajaxurl) {
-            try {
-                products = await doAjaxCall(ajaxurl)
+                saledBiscuit = await doAjaxCall(ajaxurl)
                 getDataForGraph();
                 startDrawGraph();
             } catch(err) {
                 console.log(err);
             }
         }
-        
         function getDataForGraph(){
             let graphData = {}
             let dataPoints = []
@@ -146,22 +139,33 @@ $(document).ready(function () {
                 daysOfYearlist.push(p);
             }
 
-            for (let i = 0; i < ProductsName.length; i++){
+            let payment_type
+
+            for (let i = 0; i < paymentTypeName.length; i++){
+                if (paymentTypeName[i] === "cash"){
+                    payment_type = "Naqd pul"
+                }
+                if (paymentTypeName[i] === "credit_card"){
+                    payment_type = "Pul o'tkazma"
+                }
+                if (paymentTypeName[i] === "debt"){
+                    payment_type = "Nasiya"
+                }
+
                 graphData.type = "spline";
                 graphData.axisYType = "secondary";
-                graphData.name = ProductsName[i].name;
+                graphData.name = payment_type;
                 graphData.showInLegend = true;
                 graphData.markerSize = 5;
                 graphData.dataPoints = "dps";
 
                 for (let j = 0; j < daysOfYearlist.length; j++){
                     let quantity = 0;
-                    for (let z = 0; z < products.length; z++){
-                        if (ProductsName[i].name == products[z].product.name){
-                            let orderDate = products[z].created_date;
-                            orderDate = orderDate.slice(0, 10);
+                    for (let z = 0; z < saledBiscuit.length; z++){
+                        if (paymentTypeName[i] == saledBiscuit[z].payment_type){
+                            let orderDate = saledBiscuit[z].created_date;
                             if (daysOfYearlist[j] == orderDate){
-                                quantity += parseFloat(products[z].quantity);
+                                quantity += parseFloat(saledBiscuit[z].quantity);
                             }
                         }
                     }
@@ -176,17 +180,17 @@ $(document).ready(function () {
                 graphData = {};
             }
         }
+        
         function startDrawGraph(){
-
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationDuration: 2000,
                 animationEnabled: true,
                 title: {
-                    text: "Kirim bo'lgan xomashyo tarixi"
+                    text: ""
                 },
                 axisX: {
                     lineColor: "black",
-                    labelFontColor: "black",
+		            labelFontColor: "black",
                     valueFormatString: "MMM YYYY DD"
                 },
                 axisY2: {
@@ -221,10 +225,8 @@ $(document).ready(function () {
                     }
                 },
                 data: vitalData 
-                
             });
             chart.render();
-        
         }
     }
 })

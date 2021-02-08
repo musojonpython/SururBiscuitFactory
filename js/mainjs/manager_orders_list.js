@@ -107,7 +107,7 @@ $(document).ready(function(){
             if (i == 3){
                 elem.html(
                     `<select tabindex="1" style="width: 100%;">
-                        <option value="pending">Zakaz berildi</option>
+                        <option value="pending">Buyurtma berildi</option>
                         <option value="completed">Tugatilgan</option>
                     </select>`
                 )
@@ -318,10 +318,10 @@ $(document).ready(function(){
                 date = created_date.slice(0, 10);
                 time = created_date.slice(12, 16);
                 if (status === 'pending') {
-                    status = 'Zakaz berilgan';
+                    status = 'Buyurtma berilgan';
                 }
                 if (status === 'completed') {
-                    status = "Zakaz tugallanib bo'lgan";
+                    status = "Buyurtma tugallanib bo'lgan";
                 }
                 output =  output + `
                 <tr>

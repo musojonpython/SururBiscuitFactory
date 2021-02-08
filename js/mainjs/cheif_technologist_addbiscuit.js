@@ -358,62 +358,78 @@ $(document).ready(function(){
         })
     }    
 
+    function doAjaxCall(ajaxurl) { 
+        return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+        headers: {'Authorization': `Token ${token}`}
+        });
+    };
+    let staffProducedBiscuits, staffNames;
+
     function warehouseProduceProduct() {
-        
-        $.ajax({
-            type: "GET",
-            url: 'http://206.189.145.94/api/v1/biscuit/staff/produce/',
-            headers: {
-                'Authorization': `Token ${token}`
-            },
-        })
-        .done(function(data){
-            console.log(data);
             let output = "", size = 0;
-
-            data.forEach(elem=>{
-                size++;
-                let checkStaff = elem.staff;
-                if (checkStaff != null){
-                    let {biscuit:{name}, id,  quantity, staff:{last_name}, 
-                        staff:{first_name}, status, modified_date} = elem;
-
-                    modified_date1 = modified_date.slice(0, 10);
-                    modified_time = modified_date.slice(11, 16)
-                    if (status == 'unpaid'){
-                        status = "Oylik berilmagan"
-                    }else{
-                        status = "Oylik berilgan"
-                    }
-                    output =  output + `
-                    <tr>
-                        <th scope="row" id="nameproduct" data-id=${id}>${size}</th>
-                        <td>${name}</td>
-                        <td>${quantity}</td>
-                        <td>${first_name} ${last_name}</td>
-                        <td>${status}</td>
-                        <td>${modified_date1}</td>
-                        <td>${modified_time}</td>
-                        <td style="display: flex; flex-direction: row">
-                            <p style="font-size: 20px; margin-right: 5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
-                                <i class="fa fa-edit"></i>
-                            </p>
-                            <p style="font-size: 20px; display: none; margin-right:5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
-                                <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
-                            </p>
-                            <p style="font-size: 20px; margin-right: 5px; cursor:pointer; display:none" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
-                                <i class="fa fa-undo"></i>
-                            </p>
-                        </td>
-                    </tr>
-                    `
+            getStaffProduced('http://206.189.145.94/api/v1/staff/biscuit/add/');
+            async function getStaffProduced(ajaxurl){
+                try{
+                    staffProducedBiscuits = await doAjaxCall(ajaxurl);
+                    otherFunc();
+                } catch(err) {
+                    console.log(err);
                 }
+            }
+            function otherFunc(){
+            staffProducedBiscuits.forEach(elem=>{
+                size++;
+                let {biscuit_quantity, id, staff, status, created_date} = elem;
+                var first_name, last_name;
+                getStaffName(`http://206.189.145.94/api/v1/user/account/list/${staff}`);
+                async function getStaffName(ajaxurl) {
+                    try {
+                    staffNames = await doAjaxCall(ajaxurl);
+                    first_name = staffNames["first_name"];
+                    last_name = staffNames["last_name"];
+                    fillStaffData();
+                    } catch(err) {
+                    console.log(err);
+                    }
+                }
+                    // console.log("🚀 ~ file: cheif_technologist_addbiscuit.js ~ line 386 ~ .done ~ last_name", last_name)
+                    function fillStaffData(){
+                        date = created_date.slice(0, 10);
+                        time = created_date.slice(11, 16)
+                        if (status == 'calculated'){
+                            status = "Oylik berilmagan"
+                        }else{
+                            status = "Oylik berilgan"
+                        }
+                        output =  output + `
+                        <tr>
+                            <th scope="row" id="nameproduct" data-id=${id}>${size}</th>
+                            <td>${last_name}</td>
+                            <td>${first_name}</td>
+                            <td>${biscuit_quantity}</td>
+                            <td>${status}</td>
+                            <td>${date}</td>
+                            <td>${time}</td>
+                            <td style="display: flex; flex-direction: row">
+                                <p style="font-size: 20px; margin-right: 5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="O'zgartirish" id="editbutton">
+                                    <i class="fa fa-edit"></i>
+                                </p>
+                                <p style="font-size: 20px; display: none; margin-right:5px; cursor:pointer" data-toggle="tooltip" data-placement="bottom" title="Saqlash" id="saveupdatebutton">
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Saqlash</button>
+                                </p>
+                                <p style="font-size: 20px; margin-right: 5px; cursor:pointer; display:none" data-toggle="tooltip" data-placement="bottom" title="Qayta yuklash" id="undobutton">
+                                    <i class="fa fa-undo"></i>
+                                </p>
+                            </td>
+                        </tr>
+                        `
+                        document.getElementById('staffProducedData').innerHTML=output;
+                    }
+                console.log("🚀 ~ file: cheif_technologist_addbiscuit.js ~ line 408 ~ fillStaffData ~ output", output)
             })
-            document.getElementById('dynamictable').innerHTML=output;
-        })
-        .fail(function(){
-            alert("Internet yo'q");
-        })
+        }
     }
 
     // End get information from data for select element

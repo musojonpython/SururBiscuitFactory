@@ -37,11 +37,10 @@
                         <nav class="nav navbar-nav">
                             <div class="row" style="margin-right: 0;">
                                 <div class="col-md-9 col-sm-9 center-text">
-                                    <h3 style="text-align: center;">Pechenielar qo'shish</h3>
+                                    <h3 style="text-align: center;">Maxsulot qo'shish</h3>
                                 </div>
                                 <div class="col-sm-3 col-md-3">
-                                    <div id="helperinfocheif">
-                                    </div>
+                                    <div id="helperinfocheif"> </div>
                                 </div>
                             </div>
                         </nav>
@@ -51,19 +50,13 @@
                     <!-- begin add whole Biscuit quantity   -->
                     <div class="row">
                         <div class="x_panel">
-                            <div class="row">
-                                <div class="col">
-                                    <p style="text-align: center; font-size: 20px">Pechenie qo'shish</p>
-                                </div>
-                            </div>
-                            <hr>
                             <div class="x_content">
                                 <form id="addWholeBiscuitForm" style="display: flex; flex-direction: row;">
                                     <div id="addWholeBiscuitRowId">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label style="text-align: center; font-size: large;">Pechenie Nomi
+                                                    <label style="text-align: center; font-size: large;">Maxsulot Nomi
                                                         <span style="color:red"> *</span>
                                                         <select id="BiscuitName" class="select2_single form-control" 
                                                             tabindex="0" style="width: 300px; margin-left: 20px;">
@@ -100,7 +93,7 @@
                     <div class="x_panel">
                         <div class="row">
                             <div class="col">
-                                <p style="text-align: center; font-size: 20px">Pechenie qo'shish ishchilar uchun </p>
+                                <p style="text-align: center; font-size: 20px">Maxsulot qo'shish ishchilar uchun </p>
                             </div>
                         </div>
                         <hr>
@@ -142,33 +135,33 @@
                 </div>
                 </form>
                 <!-- end add Biscuit quantity for Staff  -->
-                    <div style="text-align: center;">
-                        <h4 style="text-align: center;">Ishlab chiqarilgan pechenielar ro'yxati</h4>
-                    </div>
-                    <div class="center-text">
-                        <input type="text" style="width: 60%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
-                        <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
-                    </div>
-                    <div class="custom-table-container">
-                    <table class="table table-hover" style="margin-left: 20px;" id="clientTable">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="position: sticky; top: 5px" scope="col">#</th>
-                                <th style="position: sticky; top: 5px" scope="col">Pechenie nomi</th>
-                                <th style="position: sticky; top: 5px" scope="col">Og'irligi</th>
-                                <th style="position: sticky; top: 5px" scope="col">Ishchi ismi familiyasi</th>
-                                <th style="position: sticky; top: 5px" scope="col">Oyligi</th>
-                                <th style="position: sticky; top: 5px" scope="col">Sanasi</th>
-                                <th style="position: sticky; top: 5px" scope="col">Vaqti</th>
-                                <th style="position: sticky; top: 5px" scope="col">Jarayon</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dynamictable"> </tbody>
-                    </table>
+                <div style="text-align: center;">
+                    <h4 style="text-align: center;">Ishlab chiqarilgan maxsulotlar ro'yxati</h4>
                 </div>
+                <div class="center-text">
+                    <input type="text" style="width: 60%; margin-bottom: 2%; margin-top: 2%;" id="search" class="search form-control" placeholder="Qidirish.."/>
+                    <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 2%;" id="counter"></span>
+                </div>
+                <div class="custom-table-container">
+                <table class="table table-hover" style="margin-left: 20px;" id="clientTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="position: sticky; top: 5px" scope="col">#</th>
+                            <th style="position: sticky; top: 5px" scope="col">Maxsulot nomi</th>
+                            <th style="position: sticky; top: 5px" scope="col">Og'irligi</th>
+                            <th style="position: sticky; top: 5px" scope="col">Ishchi ismi familiyasi</th>
+                            <th style="position: sticky; top: 5px" scope="col">Oyligi</th>
+                            <th style="position: sticky; top: 5px" scope="col">Sanasi</th>
+                            <th style="position: sticky; top: 5px" scope="col">Vaqti</th>
+                            <th style="position: sticky; top: 5px" scope="col">Jarayon</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffProducedData"> </tbody>
+                </table>
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- jQuery -->
         <script src="vendors/jquery/dist/jquery.min.js"></script>

@@ -1,25 +1,88 @@
-$(document).ready(function () {
+$(document).ready(function(){
 
-    mycookie = Cookies.get("director");
-
-    if (mycookie == "false" || mycookie == undefined) {
-        window.open('index.html', "_self");
+    let mycookie = Cookies.get('director')
+    if (mycookie == "false" || mycookie == undefined){
+        window.open("index.html", "_self")
     }
-    
     let token = Cookies.get("directorToken");
 
     $('#helpersubmenu').load('helperDirector.html div#helpersubmenu');
     $('#helpercheifmenu').load('helperDirector.html div#helpercheifmenu');
+    
+    warehouseProduceProduct();
 
-    warehouseProducts();    
+    function doAjaxCall(ajaxurl) { 
+        return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+        headers: {'Authorization': `Token ${token}`}
+        });
+    };
+    let staffProducedBiscuits, staffNames;
 
+    function warehouseProduceProduct() {
+            let output = "", size = 0;
+            getStaffProduced('http://206.189.145.94/api/v1/staff/biscuit/add/');
+            async function getStaffProduced(ajaxurl){
+                try{
+                    staffProducedBiscuits = await doAjaxCall(ajaxurl);
+                    otherFunc();
+                } catch(err) {
+                    console.log(err);
+                }
+            }
+            function otherFunc(){
+            staffProducedBiscuits.forEach(elem=>{
+                
+                let {biscuit_quantity, id, staff, status, created_date} = elem;
+                var first_name, last_name;
+                getStaffName(`http://206.189.145.94/api/v1/user/account/list/${staff}`);
+                async function getStaffName(ajaxurl) {
+                    try {
+                    staffNames = await doAjaxCall(ajaxurl);
+                    first_name = staffNames["first_name"];
+                    last_name = staffNames["last_name"];
+                    fillStaffData();
+                    } catch(err) {
+                    console.log(err);
+                    }
+                }
+                    // console.log("🚀 ~ file: cheif_technologist_addbiscuit.js ~ line 386 ~ .done ~ last_name", last_name)
+                    function fillStaffData(){
+                        size++;
+                        date = created_date.slice(0, 10);
+                        time = created_date.slice(11, 16)
+                        if (status == 'calculated'){
+                            status = "Oylik berilmagan"
+                        }else{
+                            status = "Oylik berilgan"
+                        }
+                        output =  output + `
+                        <tr>
+                            <th scope="row" id="nameproduct" data-id=${id}>${size}</th>
+                            <td>${last_name}</td>
+                            <td>${first_name}</td>
+                            <td>${biscuit_quantity}</td>
+                            <td>${status}</td>
+                            <td>${date}</td>
+                            <td>${time}</td>
+                        </tr>
+                        `
+                        document.getElementById('staffProducedData').innerHTML=output;
+                    }
+                console.log("🚀 ~ file: cheif_technologist_addbiscuit.js ~ line 408 ~ fillStaffData ~ output", output)
+            })
+        }
+    }
+
+    
     $('#search').keyup(function(){
         let count = 0;
-        searchTable($(this).val(), count);
+        search_table($(this).val(), count)
     })
 
-    function searchTable(value, count){
-        $("#productTable tbody tr").each(function(){
+    function search_table(value, count){
+        $('#client_table tbody tr').each(function(){
             let found = false;
             $(this).each(function(){
                 if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0){
@@ -28,55 +91,13 @@ $(document).ready(function () {
                 }
             })
             if(found){
+                $("#counter").text(count + " ta topildi");
                 $(this).show();
-                $('#counter').text(count + ' ta topildi');
             }else{
                 $(this).hide();
                 $("#counter").text(count + " ta topildi");
             }
         })
-    }
-
-    function warehouseProducts() {
-        $.ajax({
-            type: 'get',
-            headers: {
-                'Authorization': `token ${token}`
-            },
-            url: 'http://206.189.145.94/api/v1/warehouse/products/',
-            success: function (data) {
-                let output = "", count = 0, size = 0;
-
-                data.forEach(elem => {
-                    count++;
-                })
-
-                data.forEach(elem => {
-                    size++;
-                    let { product: { name }, product: { unit_of_measurement },
-                        product: { modified_date }, average_price, quantity, total_price,
-                        product: { description } } = elem;
-
-                    modified_date = modified_date.slice(0, 10);
-                    output = output + `
-                <tr>
-                    <th scope="row">${size}</th>
-                    <td>${name}</td>
-                    <td>${quantity}</td>
-                    <td>${unit_of_measurement}</td>
-                    <td>${average_price}</td>
-                    <td>${total_price}</td>
-                    <td>${description}</td>
-                    <td>${modified_date}</td>
-                </tr>
-                `
-                })
-                document.getElementById('dynamicTable').innerHTML = output;
-            },
-            failure: function (res) {
-                alert("Internet yo'q");
-            }
-        });
     }
 
     let datesFromPages = false;
@@ -87,41 +108,40 @@ $(document).ready(function () {
         datesFromPages = true;
         makingGraph();
     })
-    
-    function makingGraph(){
-        var ProductsName = []
-        var products = {}
+
+    function makingGraph() {
+        var staffNames = {}
+        var saledBiscuit = {}
         var vitalData = []
-
-        getProductsName('http://206.189.145.94/api/v1/product/');
-
+        
+        getstaffNames('http://206.189.145.94/api/v1/user/filter/?role=staff');
+        
         function doAjaxCall(ajaxurl) { 
             return $.ajax({
-            url: ajaxurl,
-            type: 'GET',
-            headers: {'Authorization': `Token ${token}`}
+                url: ajaxurl,
+                type: 'GET',
+                headers: {'Authorization': `Token ${token}`}
             });
         };
-    
-        async function getProductsName(ajaxurl) {
+        
+        async function getstaffNames(ajaxurl) {
             try {
-            ProductsName = await doAjaxCall(ajaxurl)
-            getProducts('http://206.189.145.94/api/v1/product/add/quantity/');
+            staffNames = await doAjaxCall(ajaxurl)
+                getSaledBiscuit('http://206.189.145.94/api/v1/staff/biscuit/add/');
             } catch(err) {
             console.log(err);
             }
         }
 
-        async function getProducts(ajaxurl) {
+        async function getSaledBiscuit(ajaxurl) {
             try {
-                products = await doAjaxCall(ajaxurl)
+                saledBiscuit = await doAjaxCall(ajaxurl)
                 getDataForGraph();
                 startDrawGraph();
             } catch(err) {
                 console.log(err);
             }
         }
-        
         function getDataForGraph(){
             let graphData = {}
             let dataPoints = []
@@ -146,22 +166,21 @@ $(document).ready(function () {
                 daysOfYearlist.push(p);
             }
 
-            for (let i = 0; i < ProductsName.length; i++){
+            for (let i = 0; i < staffNames.length; i++){
                 graphData.type = "spline";
                 graphData.axisYType = "secondary";
-                graphData.name = ProductsName[i].name;
+                graphData.name = staffNames[i].last_name + staffNames[i].first_name;
                 graphData.showInLegend = true;
                 graphData.markerSize = 5;
                 graphData.dataPoints = "dps";
 
                 for (let j = 0; j < daysOfYearlist.length; j++){
                     let quantity = 0;
-                    for (let z = 0; z < products.length; z++){
-                        if (ProductsName[i].name == products[z].product.name){
-                            let orderDate = products[z].created_date;
-                            orderDate = orderDate.slice(0, 10);
+                    for (let z = 0; z < saledBiscuit.length; z++){
+                        if (staffNames[i].id == saledBiscuit[z].staff){
+                            let orderDate = (saledBiscuit[z].created_date).slice(0, 10);
                             if (daysOfYearlist[j] == orderDate){
-                                quantity += parseFloat(products[z].quantity);
+                                quantity += parseFloat(saledBiscuit[z].biscuit_quantity);
                             }
                         }
                     }
@@ -176,17 +195,17 @@ $(document).ready(function () {
                 graphData = {};
             }
         }
+        
         function startDrawGraph(){
-
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationDuration: 2000,
                 animationEnabled: true,
                 title: {
-                    text: "Kirim bo'lgan xomashyo tarixi"
+                    text: ""
                 },
                 axisX: {
                     lineColor: "black",
-                    labelFontColor: "black",
+		            labelFontColor: "black",
                     valueFormatString: "MMM YYYY DD"
                 },
                 axisY2: {
@@ -221,10 +240,8 @@ $(document).ready(function () {
                     }
                 },
                 data: vitalData 
-                
             });
             chart.render();
-        
         }
     }
 })

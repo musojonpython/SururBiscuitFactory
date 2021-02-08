@@ -39,7 +39,7 @@
                     <nav class="nav navbar-nav">
                         <div class="row" style="margin-right: 0;">
                             <div class="col-md-9 col-sm-9" style="display: flex; align-items: center; justify-content: center;">
-                                <h1 style="text-align: center;">Ombordagi Maxsulotlar</h1>
+                                <h1 style="text-align: center;">Sotilgan maxsulotlar ro'yxati</h1>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                 <div id="helpercheifmenu"></div>
@@ -50,28 +50,30 @@
             </div>
             <!-- page content -->
             <div class="right_col" role="main">
-                <div class="row" style="display: flex; align-items: center;"> 
-                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
-                        <label for="date1from" style="margin-top: 10px;" ><h5> Dan:</h5></label>
-                        <input class="form-control" type="date"  id="startDate" value="2021-01-31" style="width: 170px;">
+                <div>
+                    <div class="row" style="display: flex; align-items: center;"> 
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                            <label for="startDate" style="margin-top: 10px;" ><h5> Dan:</h5></label>
+                            <input class="form-control" type="date"  id="startDate" value="2021-01-31" style="width: 170px;">
+                        </div>
+                        <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                            <label for="finishDate" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
+                            <input class="form-control" type="date" id="finishDate" value="2021-02-02" style="width: 170px;">
+                        </div>
+                        <div  class="col-md-3">
+                            <button class="btn btn-info" style="margin-left: 10px;" id="makeDynamicGraph" >Qidirish</button>
+                        </div>
                     </div>
-                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
-                        <label for="date2to" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
-                        <input class="form-control" type="date" id="finishDate" value="2021-02-02" style="width: 170px;">
-                    </div>
-                    <div  class="col-md-3">
-                        <button class="btn btn-info" style="margin-left: 10px;" id="makeDynamicGraph" >Qidirish</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <div class="row">
+                        <div class="col">
+                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                        </div>
                     </div>
                 </div>
                 <div style="text-align: center;">
                     <h4 style="text-align: center;">&nbsp</h4>
                 </div>
-
                 <div class="center-text">
                     <input type="text" style="width: 60%; margin-bottom: 2%; margin-top: 1%;" id="search" class="search form-control" placeholder="Qidirish.."/>
                     <span style="color: acacac; font-size: medium; margin-bottom: 2%; margin-top: 1%;" id="counter"></span>
@@ -85,17 +87,14 @@
                                 <th style="position: sticky; top: 5px;" scope="col">Nomi</th>
                                 <th style="position: sticky; top: 5px;" scope="col">Og'irligi</th>
                                 <th style="position: sticky; top: 5px;" scope="col">O'lchov birligi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Narxi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Umumiy narx</th>
-                                <th style="position: sticky; top: 5px;" scope="col">O'rtacha narxi</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Pul birligi</th>
+                                <th style="position: sticky; top: 5px;" scope="col">Kompaniya</th>
+                                <th style="position: sticky; top: 5px;" scope="col">To'lov turi</th>
+                                <th style="position: sticky; top: 5px;" scope="col">Holati</th>
                                 <th style="position: sticky; top: 5px;" scope="col">Izoh</th>
                                 <th style="position: sticky; top: 5px;" scope="col">Sana</th>
-                                <th style="position: sticky; top: 5px;" scope="col">Vaqt</th>
                             </tr>
                         </thead>
-                        <tbody id="dynamictable">
-                        </tbody>
+                        <tbody id="saledBiscuitList"> </tbody>
                     </table>
                 </div>
             </div>
@@ -117,6 +116,7 @@
         <script src="build/js/custom.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+        
         <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
         
         <script src="/js/mainjs/director_trade_analytics.js"></script>

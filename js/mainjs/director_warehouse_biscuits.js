@@ -146,8 +146,6 @@ $(document).ready(function(){
                 startDate = startDate.setDate(startDate.getDate() - 30);
                 today = today.setDate(today.getDate() + 1);
             }
-            console.log("🚀 ~ file: director_warehouse_products.js ~ line 136 ~ getDataForGraph ~ today", today)
-            console.log("🚀 ~ file: director_warehouse_products.js ~ line 135 ~ getDataForGraph ~ startDate", startDate)
             
             
             let daysOfYearlist = [];
@@ -157,14 +155,13 @@ $(document).ready(function(){
                 p = p.toISOString().slice(0, 10);
                 daysOfYearlist.push(p);
             }
-            console.log("🚀 ~ file: director_warehouse_products.js ~ line 140 ~ getDataForGraph ~ daysOfYearlist", daysOfYearlist)
 
             for (let i = 0; i < biscuitName.length; i++){
                 graphData.type = "spline";
                 graphData.axisYType = "secondary";
                 graphData.name = biscuitName[i].name;
                 graphData.showInLegend = true;
-                graphData.markerSize = 0;
+                graphData.markerSize = 5;
                 graphData.dataPoints = "dps";
 
                 for (let j = 0; j < daysOfYearlist.length; j++){
@@ -190,17 +187,23 @@ $(document).ready(function(){
         }
         
         function startDrawGraph(){
-
+            
             var chart = new CanvasJS.Chart("chartContainer", {
+                animationDuration: 2000,
+                animationEnabled: true,
                 title: {
                     text: "Kirim bo'lgan maxsulotlar tarixi"
                 },
                 axisX: {
+                    lineColor: "black",
+		            labelFontColor: "black",
                     valueFormatString: "MMM YYYY DD"
                 },
                 axisY2: {
+                    gridThickness: 0,
+                    titleFontColor: "black",
+                    labelFontColor: "black",
                     title: "Og'irligi",
-                    // prefix: "$",
                     suffix: "Kg"
                 },
                 toolTip: {
@@ -208,25 +211,28 @@ $(document).ready(function(){
                 },
                 legend: {
                     cursor: "pointer",
-                    verticalAlign: "top",
-                    horizontalAlign: "center",
-                    dockInsidePlotArea: true,
-                    itemclick: toogleDataSeries
+                    itemmouseover: function(e) {
+                        e.dataSeries.lineThickness = e.chart.data[e.dataSeriesIndex].lineThickness * 2;
+                        e.dataSeries.markerSize = e.chart.data[e.dataSeriesIndex].markerSize + 2;
+                        e.chart.render();
+                    },
+                    itemmouseout: function(e) {
+                        e.dataSeries.lineThickness = e.chart.data[e.dataSeriesIndex].lineThickness / 2;
+                        e.dataSeries.markerSize = e.chart.data[e.dataSeriesIndex].markerSize - 2;
+                        e.chart.render();
+                    },
+                    itemclick: function (e) {
+                        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                            e.dataSeries.visible = false;
+                        } else {
+                            e.dataSeries.visible = true;
+                        }
+                        e.chart.render();
+                    }
                 },
                 data: vitalData 
-                
             });
-                console.log("🚀 ~ file: director_warehouse_products.js ~ line 209 ~ startDrawGraph ~ vitalData", vitalData)
             chart.render();
-
-            function toogleDataSeries(e){
-                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else{
-                    e.dataSeries.visible = true;
-                }
-                chart.render();
-            }
         }
     }
 })

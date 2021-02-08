@@ -48,8 +48,6 @@ $(document).ready(function(){
                 url: `http://206.189.145.94/api/v1/biscuit/sale/price/`,
                 headers:{
                     'Authorization': `Token ${token}`,
-                    'Accept':'application/json, text/plain, */*',
-                    'Content-type': 'application/json'
                 },
                 data:senddata,
             })
@@ -72,6 +70,7 @@ $(document).ready(function(){
                 "comment":comment,
                 "payment_type":payment_type,
                 "client":client
+                // "sale_price": sellcost ertaga ochilishi kerak
             }
             
             data = JSON.stringify(data);
@@ -91,9 +90,10 @@ $(document).ready(function(){
             })
             .fail(function(xhr, errorThrown, status){
                 infojson = xhr.responseJSON;
+                console.log("🚀 ~ file: manager_buy_biscuits.js ~ line 94 ~ .fail ~ infojson", infojson)
                 
                 if (status == 'Bad Request' || errorThrown == 'Bad Request'){
-                    alert(infojson['non_field_errors'][0])
+                    alert(infojson['error'][0])
                 }else{
                     alert("Internet yo'q");
                 }
@@ -221,13 +221,9 @@ $(document).ready(function(){
         let elem, biscuit, quantity, sellcost, currency, payment_type, client, comment;
 
         elem = par.children('#namecompany');
-        console.log(elem);
         el = par.children().eq(0);
         console.log(el);
         elem = par.children('#namecompany').attr("data-id");
-        console.log(elem);
-
-        // console.log(objid);
 
         elem = par.children().eq(1);
         biscuit = elem.children().val();
@@ -363,7 +359,7 @@ $(document).ready(function(){
         let size = 1
         $.ajax({
             type: "get",
-            url: "http://206.189.145.94/api/v1/biscuit/saled/filter",
+            url: "http://206.189.145.94/api/v1/biscuit/company/sale/",
             headers: {
                 'Authorization': `Token ${token}`    
             },
@@ -375,10 +371,13 @@ $(document).ready(function(){
                     size = 1;
                     let sale_price1, total_price1;
                     
-                    let {id, biscuit:{name}, quantity, 
-                            client:{company}, payment_type, modified_date, 
-                            currency, biscuit:{unit_of_measurement}, comment} = elem;
-                    
+                    let {
+                        id, biscuit:{name}, quantity, 
+                        client:{company}, payment_type, modified_date, 
+                        currency, biscuit:{unit_of_measurement}, comment
+                        } = elem;
+                    // sale_price1 = elem.sale_price; ertaga ochilish kerak
+
                     if (payment_type == 'credit_card'){
                         payment_type = "Plastik yoki bank o'tkazma"
                     }
@@ -400,7 +399,6 @@ $(document).ready(function(){
                         },
                     })
                     .done(function(data){
-                        console.log(data);
                         let {sale_price,  default_price} = data;
                         sale_price1 = sale_price;
                         default_price1 = default_price

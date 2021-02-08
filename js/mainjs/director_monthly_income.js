@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('#helpersubmenu').load('helperDirector.html div#helpersubmenu');
     $('#helpercheifmenu').load('helperDirector.html div#helpercheifmenu');
 
-    warehouseproducts();
+    // warehouseproducts();
 
     function warehouseproducts(){
         $.ajax({
@@ -93,11 +93,8 @@ $(document).ready(function(){
     })
 
     function makingGraph() {
-        var clientsName = {}
         var saledBiscuit = {}
-        var vitalData = []
-        
-        getClientsName('http://206.189.145.94/api/v1/client/');
+        var dataPoints = []
         
         function doAjaxCall(ajaxurl) { 
             return $.ajax({
@@ -106,16 +103,8 @@ $(document).ready(function(){
                 headers: {'Authorization': `Token ${token}`}
             });
         };
+        getSaledBiscuit('http://206.189.145.94/api/v1/biscuit/company/sale/');
         
-        async function getClientsName(ajaxurl) {
-            try {
-            clientsName = await doAjaxCall(ajaxurl)
-                getSaledBiscuit('http://206.189.145.94/api/v1/biscuit/company/sale/');
-            } catch(err) {
-            console.log(err);
-            }
-        }
-
         async function getSaledBiscuit(ajaxurl) {
             try {
                 saledBiscuit = await doAjaxCall(ajaxurl)
@@ -126,8 +115,6 @@ $(document).ready(function(){
             }
         }
         function getDataForGraph(){
-            let graphData = {}
-            let dataPoints = []
             let dataPoint = {}
             let today = new Date();
             let startDate = new Date();
@@ -149,80 +136,39 @@ $(document).ready(function(){
                 daysOfYearlist.push(p);
             }
 
-            for (let i = 0; i < clientsName.length; i++){
-                graphData.type = "spline";
-                graphData.axisYType = "secondary";
-                graphData.name = clientsName[i].company;
-                graphData.showInLegend = true;
-                graphData.markerSize = 5;
-                graphData.dataPoints = "dps";
 
-                for (let j = 0; j < daysOfYearlist.length; j++){
-                    let quantity = 0;
-                    for (let z = 0; z < saledBiscuit.length; z++){
-                        if (clientsName[i].id == saledBiscuit[z].client.id){
-                            let orderDate = saledBiscuit[z].created_date;
-                            if (daysOfYearlist[j] == orderDate){
-                                quantity += parseFloat(saledBiscuit[z].quantity);
-                            }
-                        }
+            for (let i = 0; i <= daysOfYearlist.length; i++){
+                let quantity = 0;
+                for (let j = 0; j < saledBiscuit.length; j++){
+                    if (daysOfYearlist[i] == saledBiscuit[j].created_date){
+                        quantity += parseFloat(saledBiscuit[j].quantity)
                     }
-                    dataPoint.x = new Date (daysOfYearlist[j])
-                    dataPoint.y = parseFloat(quantity)
-                    dataPoints.push(dataPoint);
-                    dataPoint = {};
                 }
-                graphData.dataPoints = dataPoints;
-                vitalData.push(graphData);
-                dataPoints = [];
-                graphData = {};
+                dataPoint.y = quantity;
+                dataPoint.label = daysOfYearlist[i];
+                dataPoints.push(dataPoint);
+                dataPoint = {};
             }
         }
         
         function startDrawGraph(){
             var chart = new CanvasJS.Chart("chartContainer", {
-                animationDuration: 2000,
                 animationEnabled: true,
-                title: {
-                    text: ""
+                animationDuration: 2000,
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                title:{
+                    text: "Kunlik maxsulot sotish grafigi"
                 },
-                axisX: {
-                    lineColor: "black",
-		            labelFontColor: "black",
-                    valueFormatString: "MMM YYYY DD"
+                axisY: {
+                    title: "Og'irlgi(kg)"
                 },
-                axisY2: {
-                    gridThickness: 0,
-                    titleFontColor: "black",
-                    labelFontColor: "black",
-                    title: "Og'irligi",
-                    suffix: "Kg"
-                },
-                toolTip: {
-                    shared: true
-                },
-                legend: {
-                    cursor: "pointer",
-                    itemmouseover: function(e) {
-                        e.dataSeries.lineThickness = e.chart.data[e.dataSeriesIndex].lineThickness * 2;
-                        e.dataSeries.markerSize = e.chart.data[e.dataSeriesIndex].markerSize + 2;
-                        e.chart.render();
-                    },
-                    itemmouseout: function(e) {
-                        e.dataSeries.lineThickness = e.chart.data[e.dataSeriesIndex].lineThickness / 2;
-                        e.dataSeries.markerSize = e.chart.data[e.dataSeriesIndex].markerSize - 2;
-                        e.chart.render();
-                    },
-                    itemclick: function (e) {
-                        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                            e.dataSeries.visible = false;
-                        } else {
-                            e.dataSeries.visible = true;
-                        }
-                        e.chart.render();
-                    }
-                },
-                data: vitalData 
+                data: [{        
+                    type: "column",  
+                    showInLegend: false, 
+                    legendMarkerColor: "grey",
+                    // legendText: "Umumiy maxsulot miqdori",
+                    dataPoints: dataPoints
+                }]
             });
             chart.render();
         }

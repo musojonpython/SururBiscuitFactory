@@ -53,21 +53,20 @@
             </div>
             <!-- page content -->
             <div class="right_col" role="main">
-                <hr>
                 <div class="row" style="display: flex; align-items: center;"> 
-                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
-                        <label for="date1from" style="margin-top: 10px;" ><h5> Dan:</h5></label>
-                        <input class="form-control" type="date"  id="date1from" value="2021-01-31" style="width: 170px;">
-                    </div>
-                    <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
-                        <label for="date2to" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
-                        <input class="form-control" type="date" id="date2to" value="2021-02-02" style="width: 170px;">
-                    </div>
-                    <div  class="col-md-3">
-                        <button class="btn btn-info" style="margin-left: 10px;" id="makeDynamicGraph" >Qidirish</button>
-                    </div>
+                    <div class="col-md-3"></div>
+                        <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                            <label for="date1from" style="margin-top: 10px;" ><h5> Dan:</h5></label>
+                            <input class="form-control" type="date"  id="startDate" value="2021-01-31" style="width: 170px;">
+                        </div>
+                        <div class="col-md-3" style="display: flex; align-items: center; justify-content: space-evenly;">
+                            <label for="date2to" style=" margin-top: 10px;"><h5 > Gacha:</h5> </label>
+                            <input class="form-control" type="date" id="finishDate" value="2021-02-02" style="width: 170px;">
+                        </div>
+                        <div  class="col-md-3">
+                            <button class="btn btn-info" style="margin-left: 10px;" id="makeDynamicGraph" >Qidirish</button>
+                        </div>
                 </div>
-                <!-- /top tiles -->
                 <!-- ChartJs line graph begin -->
                 <div class="row">
                     <div class="col">
